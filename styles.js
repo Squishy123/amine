@@ -17,11 +17,14 @@ export default StyleSheet.create({
     }, 
     screen: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
         },
     row: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto'
     },
     col1: {
         flex:1, 
