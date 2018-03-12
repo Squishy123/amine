@@ -1,22 +1,22 @@
 {
   "name": "amine",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Anime Streaming ",
+  "main": "app.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "node app.js"
   },
-  "dependencies": {
-    "react": "16.3.0-alpha.1",
-    "react-native": "0.54.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Squishy123/amine.git"
   },
-  "devDependencies": {
-    "babel-jest": "22.4.1",
-    "babel-preset-react-native": "4.0.0",
-    "jest": "22.4.2",
-    "react-test-renderer": "16.3.0-alpha.1"
+  "keywords": [
+    "streaming"
+  ],
+  "author": "squishy123",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Squishy123/amine/issues"
   },
-  "jest": {
-    "preset": "react-native"
-  }
+  "homepage": "https://github.com/Squishy123/amine#readme"
 }
