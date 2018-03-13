@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/Squishy123/amine/issues"
   },
-  "homepage": "https://github.com/Squishy123/amine#readme"
+  "homepage": "https://github.com/Squishy123/amine#readme",
+  "dependencies": {
+    "jsonfile": "^4.0.0",
+    "puppeteer": "^1.1.1"
+  }
 }
