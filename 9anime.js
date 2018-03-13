@@ -8,7 +8,7 @@ const filePath = 'data.json';
 
 async function init() {
     browser = await puppeteer.launch({
-        headless: true
+        headless: false
     });
     page = await browser.newPage();
 
@@ -110,11 +110,11 @@ async function navItem(url) {
         //let server = await page.$();
         //TODO FIX RANGE CHECK
         let range = await page.evaluate((sel) => {
-            return document.querySelectorAll(sel).length;
+            return (document.querySelector(sel)) ? document.querySelector(sel).children.length : 1;
         }, `#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1}) > div`); //??????
         //let server = await page.$(`#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1})`)
-        range = 4;
-        console.log(range);
+        //range = 4;
+        //console.log(range);
         //range = 3;
         for (let r = 0; r < range; r++) {
             let eps = await page.evaluate((sel) => {
@@ -140,7 +140,7 @@ async function navItem(url) {
 
 async function main() {
     await init();
-    await search("dragon ball super");
+    await search("steins gate");
     //tester code
     let searchItems = await searchResults();
     //jsonfile.writeFileSync(filePath, searchItems, {flag: 'a'});
