@@ -8,7 +8,7 @@ const filePath = 'data.json';
 
 async function init() {
     browser = await puppeteer.launch({
-        headless: false
+        headless: true
     });
     page = await browser.newPage();
 
@@ -73,7 +73,7 @@ async function searchResults() {
             }, `#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(${i}) > div > a.name`);
 
             if (title && status && img && link) {
-                console.log(`Title: ${title}`);
+                //console.log(`Title: ${title}`);
                 searchItems.push({ title: title, status: status, img: img, link: link });
             }
         }
@@ -108,23 +108,31 @@ async function navItem(url) {
 
     for (let s = 0; s < sources.length; s++) {
         //let server = await page.$();
+        //TODO FIX RANGE CHECK
         let range = await page.evaluate((sel) => {
             return document.querySelectorAll(sel).length;
-        }, `#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1})`); //??????
+        }, `#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1}) > div`); //??????
         //let server = await page.$(`#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1})`)
-
-        //console.log(range);
+        range = 4;
+        console.log(range);
         //range = 3;
         for (let r = 0; r < range; r++) {
             let eps = await page.evaluate((sel) => {
                 let episodes = [];
-                let u = document.querySelector(sel).children;
-                for(let i = 0; i < u.length; i++) {
-                    episodes.push(u[i].children[0].href);
+                if (document.querySelector(sel)) {
+                    if (document.querySelector(sel).children) {
+                        let u = document.querySelector(sel).children;
+                        for (let i = 0; i < u.length; i++) {
+                            episodes.push(u[i].children[0].href);
+                        }
+                    }
                 }
                 return episodes;
-            }, `#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1}) > ul:nth-child(${r+1})`);
-            sources[s].episodes = eps;
+            }, `#main > div > div.widget.servers > div.widget-body > div:nth-child(${s + 1}) > ul:nth-child(${r + 1})`);
+            if (sources[s].episodes)
+                sources[s].episodes = sources[s].episodes.concat(eps);
+            else
+                sources[s].episodes = eps;
         }
     }
     return sources;
@@ -132,7 +140,7 @@ async function navItem(url) {
 
 async function main() {
     await init();
-    await search("steins gate");
+    await search("dragon ball super");
     //tester code
     let searchItems = await searchResults();
     //jsonfile.writeFileSync(filePath, searchItems, {flag: 'a'});
