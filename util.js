@@ -25,42 +25,116 @@ module.exports = {
             return await tab.evaluate(scraper, arg);
         } catch (err) {
             console.error(err);
+            return null;
         }
-        return null;
     },
 
     /**
      * Returns the src property of  element of given selector
      */
-    getImgSources: async function (tab, selector) {
+    grabSRC: async function (tab, selector) {
         let numElements = await this.getNumElements(tab, selector);
-        if (numElements > 0) {
+        if (numElements > 1) {
             let arg = { selector: selector };
             let scraper = (arg, done) => {
                 let src = [];
                 let el = $(arg.selector);
-                for (let i = 0; i < el.length; i++) {
-                    src.push(el[i].src);
-                }
+                el.each((index, value) => {
+                    src.push($(value).attr('src'));
+                });
                 done(null, src);
             }
             try {
                 return await tab.evaluate(scraper, arg);
             } catch (err) {
-                console.error(err);
+                console.error("Can't grab src", err);
+                return null;
             }
         } else if (numElements == 1) {
             let arg = { selector: selector };
             let scraper = (arg, done) => {
-                done(null, $(arg.selector).src);
+                done(null, $(arg.selector).attr('src'));
             }
             try {
                 return await tab.evaluate(scraper, arg);
             } catch (err) {
                 console.error(err);
+                return null;
             }
         }
-        return null;
+
+    },
+
+    /**
+   * Returns the href property of element of given selector
+   */
+    grabHREF: async function (tab, selector) {
+        let numElements = await this.getNumElements(tab, selector);
+        if (numElements > 1) {
+            let arg = { selector: selector };
+            let scraper = (arg, done) => {
+                let href = [];
+                let el = $(arg.selector);
+                el.each((index, value) => {
+                    href.push($(value).attr('href'));
+                });
+                done(null, href);
+            }
+            try {
+                return await tab.evaluate(scraper, arg);
+            } catch (err) {
+                console.error("Can't grab href", err);
+                return null;
+            }
+        } else if (numElements == 1) {
+            let arg = { selector: selector };
+            let scraper = (arg, done) => {
+                done(null, $(arg.selector).attr('href'));
+            }
+            try {
+                return await tab.evaluate(scraper, arg);
+            } catch (err) {
+                console.error("Can't grab href", err);
+                return null;
+            }
+        }
+
+    },
+
+    /**
+    * Returns the innerHTML property of element of given selector
+    */
+    grabHTML: async function (tab, selector) {
+        let numElements = await this.getNumElements(tab, selector);
+        if (numElements > 1) {
+            let arg = { selector: selector };
+            let scraper = (arg, done) => {
+                let html = [];
+                let el = $(arg.selector);
+                el.each((index, value) => {
+                    html.push($(value).html());
+                });
+                done(null, html);
+            }
+            try {
+                return await tab.evaluate(scraper, arg);
+            } catch (err) {
+                console.error("Can't grab html", err);
+                return null;
+            }
+        } else if (numElements === 1) {
+            let arg = { selector: selector };
+            let scraper = (arg, done) => {
+                done(null, $(arg.selector).html());
+            }
+            try {
+                return await tab.evaluate(scraper, arg);
+            } catch (err) {
+                console.error("Can't grab html", err);
+                return null;
+            }
+        }
+
     },
 
     /**

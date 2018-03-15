@@ -1,10 +1,13 @@
 ///Import nickjs
 const Nick = require('nickjs');
 const nick = new Nick({
-    userAgent: "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
-    resourceTimeout: 0,
-    loadImages: false
+    loadImages: true,
+    printNavigation: false,
+    printResourceErrors: false,
+    printPageErrors: false
 });
+
+const jsonfile = require('jsonfile');
 
 //Import util lib
 const util = require('./util');
@@ -20,6 +23,51 @@ async function search(tab, query) {
 }
 
 /**
+ * Processes search results and returns an array of data
+ * @param {Tab} tab 
+ * @param {String} query 
+ */
+async function getSearchResults(tab, query) {
+    //goto search page
+    await search(tab, query);
+    let numPages = await util.grabHTML(tab, '#main > div > div:nth-child(1) > div.widget-body > div.paging-wrapper > form > span.total');
+    let searchItems = [];
+    if (!numPages) numPages = 1;
+
+    for (let p = 1; p <= numPages; p++) {
+        //go to next page
+        currentURL = `https://www3.9anime.is/search?keyword=${query}/` + `&page=${p}`;
+        await tab.open(currentURL);
+
+        let listLength = await util.getNumElements(tab, '.item');
+
+        //grab img sources
+        for (let i = 1; i <= listLength; i++) {
+            let title, status;
+            //grab title
+            title = await util.grabHTML(tab, `#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(${i}) > div > a.name`);
+            let arg = { selector: `#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(${i}) > div > a.poster.tooltipstered > div` };
+            //grab status
+            status = await tab.evaluate((arg, done) => {
+                let data = [];
+                $(arg.selector).children('div').each((index, value) => {
+                    data.push({ class: $(value).attr('class'), value: $(value).text() });
+                });
+                done(null, data);
+            }, arg);
+
+            // console.log(link)
+            if (title && status) {
+                console.log(`Title: ${title}`);
+                searchItems.push({ title: title, status: status});
+            }
+        }
+    }
+
+    return searchItems;
+}
+
+/**
  * Main
  */
 async function main() {
@@ -29,15 +77,8 @@ async function main() {
         //inject jquery so we can select stuff
         await util.injectjQuery(tab);
         //search for title
-        await search(tab, "Dragon Ball Super");
-        let i = await util.getNumElements(tab, '#main > div > div:nth-child(1) > div.widget-body > div.film-list > div');
-        console.log(i);
-
-        let img = await util.getImgSources(tab, '#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(1) > div > a.poster.tooltipstered > img')
-        console.log(img);
-       await util.logScreenshot(tab, "screenshots/screenshot.png")
-
-
+        let results = await getSearchResults(tab, "Steins Gate");
+        //jsonfile.writeFileSync('results.json', results);
     })().then(() => {
         console.log("Finished Execution");
         //exit code

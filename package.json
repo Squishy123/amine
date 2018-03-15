@@ -4,7 +4,7 @@
   "description": "anime streaming app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Squishy123/amine#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "jsonfile": "^4.0.0",
     "nickjs": "^0.3.4"
   }
 }
