@@ -44,14 +44,13 @@ async function getSearchResults(tab, query) {
         let img = await util.grabSRC(tab, ` a.poster.tooltipstered > img`);
         //grab link sources
         let link = await util.grabHREF(tab, `a.name`);
+        //grab title
+        let title = await util.grabHTML(tab, `a.name`);
         console.log(img);
         for (let i = 1; i <= listLength; i++) {
-            let title, status;
-            //grab title
-            title = await util.grabHTML(tab, `#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(${i}) > div > a.name`);
             let arg = { selector: `#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(${i}) > div > a.poster.tooltipstered > div` };
             //grab status
-            status = await tab.evaluate((arg, done) => {
+            let status = await tab.evaluate((arg, done) => {
                 let data = [];
                 $(arg.selector).children('div').each((index, value) => {
                     data.push({ class: $(value).attr('class'), value: $(value).text() });
@@ -60,9 +59,9 @@ async function getSearchResults(tab, query) {
             }, arg);
 
             // console.log(link)
-            if (title && status && img[i-1] && link[i-1]) {
-                console.log(`Title: ${title}`);
-                searchItems.push({ title: title, status: status, img: img[i-1], link: link[i-1] });
+            if (title[i-1] && status && img[i-1] && link[i-1]) {
+                console.log(`Title: ${title[i-1]}`);
+                searchItems.push({ title: title[i-1], status: status, img: img[i-1], link: link[i-1] });
             }
         }
     }
@@ -80,7 +79,7 @@ async function main() {
         //inject jquery so we can select stuff
         await util.injectjQuery(tab);
         //search for title
-        let results = await getSearchResults(tab, "Steins Gate");
+        let results = await getSearchResults(tab, "fate stay");
         jsonfile.writeFileSync('results.json', results);
 
     })().then(() => {
