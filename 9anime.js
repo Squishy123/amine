@@ -3,8 +3,7 @@ const Nick = require('nickjs');
 const nick = new Nick({
     loadImages: true,
     printNavigation: false,
-    printResourceErrors: false,
-    printPageErrors: false
+    printResourceErrors: false
 });
 
 const jsonfile = require('jsonfile');
@@ -42,6 +41,10 @@ async function getSearchResults(tab, query) {
         let listLength = await util.getNumElements(tab, '.item');
 
         //grab img sources
+        let img = await util.grabSRC(tab, ` a.poster.tooltipstered > img`);
+        //grab link sources
+        let link = await util.grabHREF(tab, `a.name`);
+        console.log(img);
         for (let i = 1; i <= listLength; i++) {
             let title, status;
             //grab title
@@ -57,9 +60,9 @@ async function getSearchResults(tab, query) {
             }, arg);
 
             // console.log(link)
-            if (title && status) {
+            if (title && status && img[i-1] && link[i-1]) {
                 console.log(`Title: ${title}`);
-                searchItems.push({ title: title, status: status});
+                searchItems.push({ title: title, status: status, img: img[i-1], link: link[i-1] });
             }
         }
     }
@@ -78,7 +81,8 @@ async function main() {
         await util.injectjQuery(tab);
         //search for title
         let results = await getSearchResults(tab, "Steins Gate");
-        //jsonfile.writeFileSync('results.json', results);
+        jsonfile.writeFileSync('results.json', results);
+
     })().then(() => {
         console.log("Finished Execution");
         //exit code
