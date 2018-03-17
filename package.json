@@ -1,26 +1,25 @@
 {
   "name": "amine",
   "version": "1.0.0",
-  "description": "Anime Streaming ",
-  "main": "app.js",
+  "description": "anime streaming app",
+  "main": "index.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Squishy123/amine.git"
   },
-  "keywords": [
-    "streaming"
-  ],
-  "author": "squishy123",
+  "author": "@squishy456",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Squishy123/amine/issues"
   },
   "homepage": "https://github.com/Squishy123/amine#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "chromium": "^1.0.2",
     "jsonfile": "^4.0.0",
-    "puppeteer": "^1.1.1"
+    "nickjs": "^0.3.4"
   }
 }
