@@ -79,7 +79,7 @@ async function main() {
         //inject jquery so we can select stuff
         await util.injectjQuery(tab);
         //search for title
-        let results = await getSearchResults(tab, "fate stay");
+        let results = await getSearchResults(tab, "dragon ball super");
         jsonfile.writeFileSync('results.json', results);
 
     })().then(() => {
@@ -89,7 +89,7 @@ async function main() {
     })
         .catch((err) => {
             //exit with error 
-            console.error(err);
+            console.error("Execution unsuccessful: ", err);
             nick.exit(1);
         });
 }
