@@ -71,7 +71,7 @@ async function getSearchResults(page, query) {
 async function main() {
     //setup puppeteer browser
     let browser = await puppeteer.launch({
-        headless: false
+        headless: true
     });
 
     (async () => {
