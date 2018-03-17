@@ -1,10 +1,5 @@
 ///Import nickjs
-const Nick = require('nickjs');
-const nick = new Nick({
-    loadImages: true,
-    printNavigation: false,
-    printResourceErrors: false
-});
+const puppeteer = require('puppeteer');
 
 const jsonfile = require('jsonfile');
 
@@ -13,55 +8,56 @@ const util = require('./util');
 
 /**
  * Searches 9anime films by keyword
- * @param {Tab} tab
+ * @param {page} page
  * @param {String} query 
  */
-async function search(tab, query) {
-    await util.search(tab, `https://www3.9anime.is/search?keyword=${query}/`);
-    await tab.waitUntilVisible('#main > div > div:nth-child(1) > div.widget-body > div.film-list');
+async function search(page, query) {
+    page.waitForSelector('#main > div > div:nth-child(1) > div.widget-body > div.film-list', { visible: true});
+    await util.search(page, `https://www3.9anime.is/search?keyword=${query}/`, {timeout: 0});
 }
 
 /**
  * Processes search results and returns an array of data
- * @param {Tab} tab 
+ * @param {page} page 
  * @param {String} query 
  */
-async function getSearchResults(tab, query) {
+async function getSearchResults(page, query) {
     //goto search page
-    await search(tab, query);
-    let numPages = await util.grabHTML(tab, '#main > div > div:nth-child(1) > div.widget-body > div.paging-wrapper > form > span.total');
+    await search(page, query);
+    let numPages = await util.grabHTML(page, '#main > div > div:nth-child(1) > div.widget-body > div.paging-wrapper > form > span.total');
     let searchItems = [];
     if (!numPages) numPages = 1;
 
     for (let p = 1; p <= numPages; p++) {
         //go to next page
         currentURL = `https://www3.9anime.is/search?keyword=${query}/` + `&page=${p}`;
-        await tab.open(currentURL);
+        page.waitForSelector('#main > div > div:nth-child(1) > div.widget-body > div.film-list', { visible: true});
+        await util.search(page, currentURL, {timeout: 0});
 
-        let listLength = await util.getNumElements(tab, '.item');
+        let listLength = await util.getNumElements(page, '.item');
 
         //grab img sources
-        let img = await util.grabSRC(tab, ` a.poster.tooltipstered > img`);
+        let img = await util.grabSRC(page, ` a.poster.tooltipstered > img`);
         //grab link sources
-        let link = await util.grabHREF(tab, `a.name`);
+        let link = await util.grabHREF(page, `a.name`);
         //grab title
-        let title = await util.grabHTML(tab, `a.name`);
+        let title = await util.grabHTML(page, `a.name`);
         console.log(img);
         for (let i = 1; i <= listLength; i++) {
             let arg = { selector: `#main > div > div:nth-child(1) > div.widget-body > div.film-list > div:nth-child(${i}) > div > a.poster.tooltipstered > div` };
             //grab status
-            let status = await tab.evaluate((arg, done) => {
+            let status = await page.evaluate((arg) => {
                 let data = [];
                 $(arg.selector).children('div').each((index, value) => {
                     data.push({ class: $(value).attr('class'), value: $(value).text() });
                 });
-                done(null, data);
+                return data;
             }, arg);
 
             // console.log(link)
-            if (title[i-1] && status && img[i-1] && link[i-1]) {
-                console.log(`Title: ${title[i-1]}`);
-                searchItems.push({ title: title[i-1], status: status, img: img[i-1], link: link[i-1] });
+            if (title[i - 1] && status && img[i - 1] && link[i - 1]) {
+                console.log(`Title: ${title[i - 1]}`);
+                searchItems.push({ title: title[i - 1], status: status, img: img[i - 1], link: link[i - 1] });
             }
         }
     }
@@ -73,24 +69,29 @@ async function getSearchResults(tab, query) {
  * Main
  */
 async function main() {
+    //setup puppeteer browser
+    let browser = await puppeteer.launch({
+        headless: false
+    });
 
     (async () => {
-        let tab = await nick.newTab();
+        let page = await browser.newPage();
         //inject jquery so we can select stuff
-        await util.injectjQuery(tab);
+        await util.injectjQuery(page);
         //search for title
-        let results = await getSearchResults(tab, "dragon ball super");
+        let results = await getSearchResults(page, "dragon ball super");
         jsonfile.writeFileSync('results.json', results);
 
     })().then(() => {
+        browser.close();
         console.log("Finished Execution");
         //exit code
-        nick.exit(0);
     })
         .catch((err) => {
+            browser.close();
             //exit with error 
             console.error("Execution unsuccessful: ", err);
-            nick.exit(1);
+
         });
 }
 
