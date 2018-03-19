@@ -17,7 +17,9 @@ const async = require('async');
  */
 async function search(page, query) {
     page.waitForSelector('#main > div > div:nth-child(1) > div.widget-body > div.film-list', { visible: true });
+    await blockAds(page, `https://www3.9anime.is/search?keyword=${query}/`);
     await util.search(page, `https://www3.9anime.is/search?keyword=${query}/`, { timeout: 0, waituntil: "domcontentloaded" });
+
 }
 
 /**
@@ -74,6 +76,7 @@ async function getSearchResults(page, query) {
  * @param {String} url 
  */
 async function getEpisodeLinks(page, url) {
+    await blockAds(page, url);
     //nav to url
     page.waitForSelector('#player', { visible: true });
     await util.search(page, url, { timeout: 0, waituntil: "domcontentloaded" });
@@ -124,17 +127,6 @@ async function getEpisodeLinks(page, url) {
  * @param {String} url 
  */
 async function getPlayerFile(browser, page, url) {
-    let whitelist = ["aspx",
-        "axd",
-        "html",
-        "js",
-        "css",
-        "rapidvideo",
-        "mp4",
-        "video",
-        "9anime",
-        "disqus",
-        url.slice(url.length - 6, url.length)];
     page.waitForSelector('#player', { visible: true }).then(() => {
         console.log("Player has appeared")
     });
@@ -143,19 +135,6 @@ async function getPlayerFile(browser, page, url) {
         window.open = () => null;
     });
 
-    //stop loading network crap
-    await page.setRequestInterception(true);
-
-    page.on('request', interceptedRequest => {
-        let request = false;
-        whitelist.forEach((e) => {
-            let url = interceptedRequest.url().toString();
-            //console.log(url);
-            if (url.includes(e)) request = true;
-        })
-        if (request) interceptedRequest.continue();
-        else interceptedRequest.abort();
-    });
     //page.setAdBlockingEnabled();
     await util.search(page, url, { timeout: 0, "waituntil" : "domcontentloaded" }).then(() => {
         console.log("Finished searching")
@@ -186,6 +165,34 @@ async function getPlayerFile(browser, page, url) {
     console.log("Job done")
 }
 
+async function blockAds(page, url) {
+    let whitelist = ["aspx",
+        "axd",
+        "html",
+        "js",
+        "css",
+        "rapidvideo",
+        "mp4",
+        "video",
+        "9anime",
+        "disqus",
+        url.slice(url.length - 6, url.length)];
+
+    //stop loading network crap
+    await page.setRequestInterception(true);
+
+    page.on('request', interceptedRequest => {
+        let request = false;
+        whitelist.forEach((e) => {
+            let url = interceptedRequest.url().toString();
+            //console.log(url);
+            if (url.includes(e)) request = true;
+        })
+        if (request) interceptedRequest.continue();
+        else interceptedRequest.abort();
+    });
+}
+
 /**
  * Main
  */
@@ -194,8 +201,8 @@ async function main() {
     let browser = await puppeteer.launch({
         headless: false,
         args: ["--disable-web-security"],
-        devtools: false,
-        executablePath: "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+        devtools: false
+        //executablePath: "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
     });
 
     (async () => {
@@ -203,16 +210,16 @@ async function main() {
         //inject jquery so we can select stuff
         await util.injectjQuery(page);
         //search for title
-        //let results = await getSearchResults(page, "steins gate");
-        //jsonfile.writeFileSync('searchResults.json', results);
+        let results = await getSearchResults(page, "madoka magica");
+        jsonfile.writeFileSync('searchResults.json', results);
 
-        let cached = require('./fileLinks.json');
+        //let cached = require('./fileLinks.json');
         //grab episode links
-        //let links = await getEpisodeLinks(page, cached[0].link);
-        //jsonfile.writeFileSync('fileLinks.json', links);
+        let links = await getEpisodeLinks(page, results[0].link);
+        jsonfile.writeFileSync('fileLinks.json', links);
 
         //grab video file
-        let file = await getPlayerFile(browser, page, cached[0].episodes[0]);
+       // let file = await getPlayerFile(browser, page, cached[0].episodes[0]);
         //sonfile.writeFileSync('link.html', file);
 
     })().then(() => {

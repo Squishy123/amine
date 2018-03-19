@@ -1,17 +1,17 @@
 [
     {
-        "title": "Steins;Gate",
+        "title": "Puella Magi Madoka Magica",
         "status": [
             {
                 "class": "ep",
-                "value": " Ep 24/24 "
+                "value": " Ep 12/12 "
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-fz1AYKuuPNc/WOuvSW2jv_I/AAAAAAAAg0Q/q8W43W0cwjQ/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate.1rx"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-Z5u0S9JfJLE/WeJDFhOqy2I/AAAAAAAAClc/lxppFEiebaQC1tWq_VwjcUel70lxErLHgCHMYCw/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica.q1n"
     },
     {
-        "title": "Steins;Gate (Dub)",
+        "title": "Puella Magi Madoka Magica (Dub)",
         "status": [
             {
                 "class": "dub",
@@ -19,382 +19,147 @@
             },
             {
                 "class": "ep",
-                "value": " Ep 24/24 "
+                "value": " Ep 12/12 "
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-nSYqGRQEtQQ/V9Ds1OyJyxI/AAAAAAAA8XQ/eUrypsKVIws/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-dub.718j"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-lZ-iQO9WCxA/WeJDP9hX5yI/AAAAAAAAClg/WLYiIoGJO-AVU_kFEsTl5-FMjmJgWw-XQCHMYCw/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-dub.5159"
     },
     {
-        "title": "Steins;Gate 0",
+        "title": "Puella Magi Madoka Magica the Movie: Rebellion",
         "status": [
             {
-                "class": "preview",
-                "value": "Preview"
-            },
-            {
-                "class": "ep",
-                "value": " Ep Preview "
+                "class": "movie",
+                "value": "Movie"
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://static.akacdn.ru/static/images/2018/02/55c036c300823a261e1b96c312a51070.jpg",
-        "link": "https://www3.9anime.is/watch/steinsgate-0.k8or"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-Z5wVnT66Al8/V-j_RG9oSuI/AAAAAAABBGk/ArX6iPHALZA/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-the-movie-rebellion.xxn3"
     },
     {
-        "title": "Steins;Gate 0 Special",
-        "status": [
-            {
-                "class": "special",
-                "value": "Special"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://static.akacdn.ru/static/images/2018/03/83b551abc3bcc1dc5be9f870526056e6.jpg",
-        "link": "https://www3.9anime.is/watch/steinsgate-0-special.vly6"
-    },
-    {
-        "title": "Steins;Gate: Egoistic Poriomania",
-        "status": [
-            {
-                "class": "special",
-                "value": "Special"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-JvYvR5J8rKY/V_DxTrSAiwI/AAAAAAABDZI/UJDSCwamTT8/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-egoistic-poriomania.qvqn"
-    },
-    {
-        "title": "Steins;Gate: Egoistic Poriomania (Dub)",
+        "title": "Puella Magi Madoka Magica the Movie: Rebellion (Dub)",
         "status": [
             {
                 "class": "dub",
                 "value": "DUB"
             },
             {
-                "class": "special",
-                "value": "Special"
+                "class": "movie",
+                "value": "Movie"
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-6pS34ojVwKQ/V9IaOD7S-0I/AAAAAAAA8ps/gGy7rKrwWWU/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-egoistic-poriomania-dub.m318"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-PwaH0nJ1yy8/WA5CzSnp2sI/AAAAAAABK5g/ghCgRbtDw58/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-the-movie-rebellion-dub.xokw"
     },
     {
-        "title": "Steins;Gate: Soumei Eichi no Cognitive Computing",
+        "title": "Puella Magi Madoka Magica Concept Movie",
         "status": [
             {
-                "class": "ona",
-                "value": "ONA"
+                "class": "movie",
+                "value": "Movie"
+            }
+        ],
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-9SrAtwJnS8k/V-jsOAEMzCI/AAAAAAABBEo/48nQ65kP6xc/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-concept-movie.mow8"
+    },
+    {
+        "title": "Puella Magi Madoka Magica the Movie Part 1: Beginnings",
+        "status": [
+            {
+                "class": "movie",
+                "value": "Movie"
+            }
+        ],
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-Zr8wtQ9Kamk/V-j_VuQ-oAI/AAAAAAABBGs/KvbM1Coa8Zo/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-the-movie-part-1-beginnings.y2oz"
+    },
+    {
+        "title": "Puella Magi Madoka Magica the Movie Part 1: Beginnings (Dub)",
+        "status": [
+            {
+                "class": "dub",
+                "value": "DUB"
+            },
+            {
+                "class": "movie",
+                "value": "Movie"
+            }
+        ],
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-9V7iLNbPPJU/WA5DEY-Ii0I/AAAAAAABK5w/Xijsy7P1MP0/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-the-movie-part-1-beginnings-dub.zqol"
+    },
+    {
+        "title": "Puella Magi Madoka Magica the Movie Part 2: Eternal (Dub)",
+        "status": [
+            {
+                "class": "dub",
+                "value": "DUB"
+            },
+            {
+                "class": "movie",
+                "value": "Movie"
+            }
+        ],
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-N4NMf0Hz3Xc/WA5C_bjeVII/AAAAAAABK5o/UU9lc_797Pg/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-the-movie-part-2-eternal-dub.ypn1"
+    },
+    {
+        "title": "Puella Magi Madoka Magica the Movie Part 2: Eternal",
+        "status": [
+            {
+                "class": "movie",
+                "value": "Movie"
+            }
+        ],
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-kDG9MlJLHp4/V-j_Z5mbLRI/AAAAAAABBGw/Nso8vnpa14g/s0/",
+        "link": "https://www4.9anime.is/watch/puella-magi-madoka-magica-the-movie-part-2-eternal.z5pm"
+    },
+    {
+        "title": "Mahou Shoujo Madoka★Magica Movie 3: Hangyaku no Monogatari - Magica Quartet x Nisioisin",
+        "status": [
+            {
+                "class": "movie",
+                "value": "Movie"
             },
             {
                 "class": "ep",
                 "value": " Ep 4/4 "
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-tMinR0KjV18/V8OhcyfTHOI/AAAAAAAA6JM/TFSAwEqatP0/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-soumei-eichi-no-cognitive-computing.4137"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-clY16OU9MPk/WDZkhMtPPEI/AAAAAAABQKw/x_cNBaSE4aA/s0/",
+        "link": "https://www4.9anime.is/watch/mahou-shoujo-madokamagica-movie-3-hangyaku-no-monogatari-magica-quartet-x-nisioisin.m45v"
     },
     {
-        "title": "Steins;Gate: Kyoukaimenjou no Missing Link - Divide By Zero",
-        "status": [
-            {
-                "class": "special",
-                "value": "Special"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-1Yc2pHoS5_Y/WP8zzXdis_I/AAAAAAAAkPE/nLTaYFTZU4cDw9OJJeziJERUzPkxDohngCHM/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-kyoukaimenjou-no-missing-link-divide-by-zero.l593"
-    },
-    {
-        "title": "Steins;Gate: The Movie − Load Region of Déjà Vu (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "movie",
-                "value": "Movie"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-R5IAa7TTd9k/WNsa0indv4I/AAAAAAAAdxs/yGVQjTlW3pg/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-the-movie-load-region-of-deja-vu-dub.q9nw"
-    },
-    {
-        "title": "Steins;Gate: The Movie − Load Region of Déjà Vu",
-        "status": [
-            {
-                "class": "movie",
-                "value": "Movie"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-oTelbG2hm1A/V8OhiAvR6ZI/AAAAAAAA6JQ/vv-JJSE0Z54/s0/",
-        "link": "https://www3.9anime.is/watch/steinsgate-the-movie-load-region-of-deja-vu.5w4m"
-    },
-    {
-        "title": "GATE (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 12/12 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-q1yrO-YIVoc/WWn6XU4HypI/AAAAAAAACZY/qK0FwvAm29ETFCuWP48vNVV9p0nTt2VVwCHMYCw/s0/",
-        "link": "https://www3.9anime.is/watch/gate-dub.070r"
-    },
-    {
-        "title": "GATE (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 12/12 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-YSok3PsualU/WVY4thqZOVI/AAAAAAAAA-E/c6B1bQoJvq89QL8fMBRzsqruPUA4Bg1pgCHMYCw/s0/",
-        "link": "https://www3.9anime.is/watch/gate-dub.oply"
-    },
-    {
-        "title": "GATE",
-        "status": [
-            {
-                "class": "ep",
-                "value": " Ep 12/12 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-zedDS7wehAg/V2izEdc4fWI/AAAAAAAApnE/_5etDdNBr1U/s0/",
-        "link": "https://www3.9anime.is/watch/gate.pj4"
-    },
-    {
-        "title": "GATE",
-        "status": [
-            {
-                "class": "ep",
-                "value": " Ep 12/12 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-8qPsjOX8v28/V6Rd_NcEGKI/AAAAAAAA0eE/FgyCA7DvltE/s0/",
-        "link": "https://www3.9anime.is/watch/gate.rj6n"
-    },
-    {
-        "title": "Divine Gate (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 12/12 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-q0NPEnCQ8Cs/V8_bNbnGB3I/AAAAAAAA8Ic/nWqkHO0KESU/s0/",
-        "link": "https://www3.9anime.is/watch/divine-gate-dub.4w7k"
-    },
-    {
-        "title": "Divine Gate",
-        "status": [
-            {
-                "class": "ep",
-                "value": " Ep 12/12 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-ehmfOe1UA7M/V3E98sVg60I/AAAAAAAAreo/ToDtW-6xO3w/s0/",
-        "link": "https://www3.9anime.is/watch/divine-gate.roq"
-    },
-    {
-        "title": "Gate Keepers",
+        "title": "Rental Magica",
         "status": [
             {
                 "class": "ep",
                 "value": " Ep 24/24 "
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-D5eY5kddsmM/WSUHUUp9WaI/AAAAAAAApX8/NThL0q179PM30xqjXXDMVCThdZHgZYVwgCHM/s0/",
-        "link": "https://www3.9anime.is/watch/gate-keepers.7pj1"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-odmuTWpclPk/V4zq0EtwHHI/AAAAAAAAwSA/SNjizlZxH9c/s0/",
+        "link": "https://www4.9anime.is/watch/rental-magica.52kq"
     },
     {
-        "title": "Gate Keepers (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 24/24 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-KfWY58MQY74/V7ZdsWRRixI/AAAAAAAA4Fw/5KRUIVQEcNg/s0/",
-        "link": "https://www3.9anime.is/watch/gate-keepers-dub.82xv"
-    },
-    {
-        "title": "Gate Keepers 21",
-        "status": [
-            {
-                "class": "ova",
-                "value": "OVA"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 6/6 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-eP-CpQ_K3ic/WPmKsJ-_gjI/AAAAAAAAjHQ/l0yfEn9xrX8/s0/",
-        "link": "https://www3.9anime.is/watch/gate-keepers-21.j5kn"
-    },
-    {
-        "title": "Gate Keepers 21 (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ova",
-                "value": "OVA"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 6/6 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-dYvqCn-1w2E/WPmKyuy3mVI/AAAAAAAAjHU/dPcjAqa1CtI/s0/",
-        "link": "https://www3.9anime.is/watch/gate-keepers-21-dub.k6lw"
-    },
-    {
-        "title": "Rio - Rainbow Gate!: Reshuffle (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 13/13 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://static.akacdn.ru/static/images/2018/02/e722ac1371d9ce2bc3a567d896ee824b.jpg",
-        "link": "https://www3.9anime.is/watch/rio-rainbow-gate-reshuffle-dub.kzrw"
-    },
-    {
-        "title": "Rio - Rainbow Gate!: Reshuffle",
+        "title": "Magica Wars",
         "status": [
             {
                 "class": "ep",
-                "value": " Ep 13/14 "
+                "value": " Ep 26/26 "
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-47PlfMaSVBg/V45cQ3OiFBI/AAAAAAAAwc4/okzlEksGt_Q/s0/",
-        "link": "https://www3.9anime.is/watch/rio-rainbow-gate-reshuffle.prp4"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-tLOvPCLH1l0/WRq2sbN9goI/AAAAAAAAnzc/NRKCWnIs36E-Pmvm6l2Xn0C1j0LGrhtCACHM/s0/",
+        "link": "https://www4.9anime.is/watch/magica-wars.l5v6"
     },
     {
-        "title": "Rio: Rainbow Gate! Special (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "special",
-                "value": "Special"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://static.akacdn.ru/static/images/2018/02/7bee98cfd76696bb9503a908558409a9.jpg",
-        "link": "https://www3.9anime.is/watch/rio-rainbow-gate-special-dub.l093"
-    },
-    {
-        "title": "Rio: Rainbow Gate! Special",
-        "status": [
-            {
-                "class": "special",
-                "value": "Special"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://static.akacdn.ru/static/images/2018/02/6281951530412b20fbd4b1e8dc365847.jpg",
-        "link": "https://www3.9anime.is/watch/rio-rainbow-gate-special.k6v4"
-    },
-    {
-        "title": "Cardfight!! Vanguard G Stride Gate (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "ep",
-                "value": " Ep 24/24 "
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-4h8bn0U15i8/WBbLE1uFZDI/AAAAAAABMII/2Ea1584YNPo/s0/",
-        "link": "https://www3.9anime.is/watch/cardfight-vanguard-g-stride-gate-dub.y9kj"
-    },
-    {
-        "title": "Cardfight!! Vanguard G Stride Gate",
+        "title": "Mahou no Star Magical Emi",
         "status": [
             {
                 "class": "ep",
-                "value": " Ep 24/24 "
+                "value": " Ep 20/38 "
             }
         ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-59WI_oScNZo/V54mKu206vI/AAAAAAAAzXI/3PgeQgls4xU/s0/",
-        "link": "https://www3.9anime.is/watch/cardfight-vanguard-g-stride-gate.l3lz"
-    },
-    {
-        "title": "the Garden of sinners Remix -Gate of seventh heaven-",
-        "status": [
-            {
-                "class": "movie",
-                "value": "Movie"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-rWe_-tlAjYg/V7QzUHtRCMI/AAAAAAAA3uU/c9fV9O8Fwbo/s0/",
-        "link": "https://www3.9anime.is/watch/the-garden-of-sinners-remix-gate-of-seventh-heaven.jpoy"
-    },
-    {
-        "title": "Pokemon Mystery Dungeon: Team Go-Getters Out of the Gate! (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "special",
-                "value": "Special"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-SKxGZ2jJ4Ps/WKPZuiT6CCI/AAAAAAABc7g/bFVBKJIqo70/s0/",
-        "link": "https://www3.9anime.is/watch/pokemon-mystery-dungeon-team-go-getters-out-of-the-gate-dub.2490"
-    },
-    {
-        "title": "Sinbad: Night at High Noon and the Wonder Gate (Dub)",
-        "status": [
-            {
-                "class": "dub",
-                "value": "DUB"
-            },
-            {
-                "class": "movie",
-                "value": "Movie"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-OW7-EXdnKc4/WjJXpYam9rI/AAAAAAAACFA/aE5CYqsAXNcZEUzOhX8Ci21dsOkroR3ugCHMYCw/s0/",
-        "link": "https://www3.9anime.is/watch/sinbad-night-at-high-noon-and-the-wonder-gate-dub.kzo4"
-    },
-    {
-        "title": "Sinbad: Night at High Noon and the Wonder Gate",
-        "status": [
-            {
-                "class": "movie",
-                "value": "Movie"
-            }
-        ],
-        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-b58SAKWc4I8/WjGHK11iFkI/AAAAAAAACCg/UuyEil64-HY2xgPbdFPUjOYMY3HI9Y9TgCHMYCw/s0/",
-        "link": "https://www3.9anime.is/watch/sinbad-night-at-high-noon-and-the-wonder-gate.85ky"
+        "img": "https://images2-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&no_expand=1&refresh=604800&url=http://2.bp.blogspot.com/-C8oVHaQ0i8U/WGMQXP1xxwI/AAAAAAABVL0/rOFze0qwMZ4/s0/",
+        "link": "https://www4.9anime.is/watch/mahou-no-star-magical-emi.ymm0"
     }
 ]
