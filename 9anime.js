@@ -17,7 +17,7 @@ const async = require('async');
  */
 async function search(page, query) {
     page.waitForSelector('#main > div > div:nth-child(1) > div.widget-body > div.film-list', { visible: true });
-    //await blockAds(page, `https://www3.9anime.is/search?keyword=${query}/`);
+    await blockAds(page, `https://www3.9anime.is/search?keyword=${query}/`);
     await util.search(page, `https://www3.9anime.is/search?keyword=${query}/`, { timeout: 0, waitUntil: "domcontentloaded" });
 
 }
@@ -76,7 +76,7 @@ async function getSearchResults(page, query) {
  * @param {String} url 
  */
 async function getEpisodeLinks(page, url) {
-    //await blockAds(page, url);
+    await blockAds(page, url);
     //nav to url
     page.waitForSelector('#player', { visible: true });
     await util.search(page, url, { timeout: 0, waitUntil: "domcontentloaded" });
@@ -187,18 +187,6 @@ async function getPlayerFile(browser, page, url) {
     return [...new Set(links)];
 }
 
-async function waitForLoad(page) {
-    new Promise((resolve) => {
-        page.on('request', (req) => {
-            waitForLoad(page);
-        });
-        page.on('requestFinished', (req) => {
-            setTimeout(() =>
-                resolve("idle"), 800)
-        });
-   });
-}
-
 async function blockAds(page, url) {
     let whitelist = ["aspx",
         "axd",
@@ -243,18 +231,17 @@ async function main() {
         //inject jquery so we can select stuff
         await util.injectjQuery(page);
         //search for title
-        /** let results = await getSearchResults(page, "steins gate");
+        let results = await getSearchResults(page, "steins gate");
          jsonfile.writeFileSync('searchResults.json', results);
  
          //grab episode links
          let links = await getEpisodeLinks(page, results[0].link);
          jsonfile.writeFileSync('fileLinks.json', links);
- */
 
 
-        let cached = require('./fileLinks.json');
+        //let cached = require('./fileLinks.json');
         //grab video file
-        let file = await getPlayerFile(browser, page, cached[0].episodes[0]);
+        let file = await getPlayerFile(browser, page, links[0].episodes[0]);
         jsonfile.writeFileSync('link.json', file);
 
     })().then(() => {
