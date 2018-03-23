@@ -17,8 +17,8 @@ const async = require('async');
  */
 async function search(page, query) {
     page.waitForSelector('#main > div > div:nth-child(1) > div.widget-body > div.film-list', { visible: true });
-    await blockAds(page, `https://www3.9anime.is/search?keyword=${query}/`);
-    await util.search(page, `https://www3.9anime.is/search?keyword=${query}/`, { timeout: 0, waituntil: "domcontentloaded" });
+    //await blockAds(page, `https://www3.9anime.is/search?keyword=${query}/`);
+    await util.search(page, `https://www3.9anime.is/search?keyword=${query}/`, { timeout: 0, waitUntil: "domcontentloaded" });
 
 }
 
@@ -76,10 +76,10 @@ async function getSearchResults(page, query) {
  * @param {String} url 
  */
 async function getEpisodeLinks(page, url) {
-    await blockAds(page, url);
+    //await blockAds(page, url);
     //nav to url
     page.waitForSelector('#player', { visible: true });
-    await util.search(page, url, { timeout: 0, waituntil: "domcontentloaded" });
+    await util.search(page, url, { timeout: 0, waitUntil: "domcontentloaded" });
     let sources = [];
 
     //grab providers and sort them out by name
@@ -131,38 +131,72 @@ async function getPlayerFile(browser, page, url) {
         console.log("Player has appeared")
     });
     //block popups
+
     await page.evaluateOnNewDocument(() => {
         window.open = () => null;
     });
 
+    //adblock plus get sources
+    let links = [];
+    let whitelist = ["aspx",
+        "axd",
+        "html",
+        "js",
+        "css",
+        "rapidvideo",
+        "mp4",
+        "video",
+        "9anime",
+        "disqus",
+        url.slice(url.length - 6, url.length)];
+
+    //stop loading network crap
+    await page.setRequestInterception(true);
+    page.on('request', interceptedRequest => {
+        let request = false;
+        whitelist.forEach((e) => {
+            let url = interceptedRequest.url().toString();
+            if (url.includes(e)) request = true;
+            if (url.includes("mp4")) links.push(url);
+        })
+        if (request) interceptedRequest.continue();
+        else interceptedRequest.abort();
+    });
+
     //page.setAdBlockingEnabled();
-    await util.search(page, url, { timeout: 0, "waituntil" : "domcontentloaded" }).then(() => {
+    //blockAds(page, url);
+    await util.search(page, url, { timeout: 0, waitUntil: "domcontentloaded" }).then(() => {
         console.log("Finished searching")
     });
 
-    //add mixed content requests
+     //add mixed content requests
     await page.evaluate(() => {
         $('head').append('<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">');
     });
 
-    let click = await page.click('#player');
-    //await page.waitForFunction(() => {
-    //    return document.getElementById("#videojs");
-    //});
-    let n = 0;
-    async function proclink() {
-        n++;
-        let link = await page.evaluate(() => {
-            //console.log();
-            return $('#videojs_html5_api').attr('src');
-        });
-        console.log(n, " link ", link);
-        if (!link) return proclink();
-        return link;
-    }
+    let click = await page.click('#player').then(() => {
+        console.log("clicked");
+    });
+ //await waitForLoad(page);
+    await page.waitForNavigation({waitUntil: "networkidle2"}).then(() => {
+    console.log("got all links");
+    }).catch((err) => {
+        console.log(err);
+    });
 
-    let link = await proclink();
-    console.log("Job done")
+    return [...new Set(links)];
+}
+
+async function waitForLoad(page) {
+    new Promise((resolve) => {
+        page.on('request', (req) => {
+            waitForLoad(page);
+        });
+        page.on('requestFinished', (req) => {
+            setTimeout(() =>
+                resolve("idle"), 800)
+        });
+   });
 }
 
 async function blockAds(page, url) {
@@ -180,13 +214,12 @@ async function blockAds(page, url) {
 
     //stop loading network crap
     await page.setRequestInterception(true);
-
     page.on('request', interceptedRequest => {
         let request = false;
         whitelist.forEach((e) => {
             let url = interceptedRequest.url().toString();
-            //console.log(url);
             if (url.includes(e)) request = true;
+            if (url.includes("mp4")) console.log(url);
         })
         if (request) interceptedRequest.continue();
         else interceptedRequest.abort();
@@ -201,7 +234,7 @@ async function main() {
     let browser = await puppeteer.launch({
         headless: false,
         args: ["--disable-web-security"],
-        devtools: false
+        devtools: true
         //executablePath: "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
     });
 
@@ -210,17 +243,19 @@ async function main() {
         //inject jquery so we can select stuff
         await util.injectjQuery(page);
         //search for title
-        let results = await getSearchResults(page, "madoka magica");
-        jsonfile.writeFileSync('searchResults.json', results);
+        /** let results = await getSearchResults(page, "steins gate");
+         jsonfile.writeFileSync('searchResults.json', results);
+ 
+         //grab episode links
+         let links = await getEpisodeLinks(page, results[0].link);
+         jsonfile.writeFileSync('fileLinks.json', links);
+ */
 
-        //let cached = require('./fileLinks.json');
-        //grab episode links
-        let links = await getEpisodeLinks(page, results[0].link);
-        jsonfile.writeFileSync('fileLinks.json', links);
 
+        let cached = require('./fileLinks.json');
         //grab video file
-       // let file = await getPlayerFile(browser, page, cached[0].episodes[0]);
-        //sonfile.writeFileSync('link.html', file);
+        let file = await getPlayerFile(browser, page, cached[0].episodes[0]);
+        jsonfile.writeFileSync('link.json', file);
 
     })().then(() => {
         //browser.close();
