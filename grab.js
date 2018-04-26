@@ -1,5 +1,5 @@
-//let url = "http://76.64.123.119:3000/api"
-let url = "http://localhost:3000/api"
+let url = "http://76.64.123.119:3000/api"
+//let url = "http://localhost:3000/api"
 
 
 async function searchAnimes(title) {
@@ -60,7 +60,22 @@ async function render() {
     }
 }
 
+async function scrape() {
+    let siteurl = document.querySelector('#scrapeURL').value;
+    var xhr = new XMLHttpRequest();
 
+    xhr.open("POST", `${url}/request?siteurl=${siteurl}`, true);
+    //xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.onload = function () {
+        var response = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.status == "200") {
+            console.log(response);
+        } else {
+            console.error(response);
+        }
+    }
+    xhr.send(null);
+}
 /*
 (async() => {
     let ep = await getEpisode("5ae0fb3bf53d792244d2fc35")
