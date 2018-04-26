@@ -1,4 +1,4 @@
-let url = "https://76.64.123.119:3000/api"
+let url = "https://76.64.123.119/api"
 //let url = "http://localhost:3000/api"
 
 
