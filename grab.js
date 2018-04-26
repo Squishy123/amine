@@ -67,12 +67,13 @@ async function scrape() {
     xhr.open("POST", `${url}/request?siteurl=${siteurl}`, true);
     //xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.onload = function () {
-        var response = JSON.parse(xhr.responseText);
-        if (xhr.readyState == 4 && xhr.status == "200") {
-            console.log(response);
-        } else {
-            console.error(response);
-        }
+            $('#alerts').append($(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Scrape Request Sent!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          `))
     }
     xhr.send(null);
 }
