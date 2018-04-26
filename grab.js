@@ -1,5 +1,5 @@
 let url = "https://76.64.123.119/api"
-//let url = "http://localhost:3000/api"
+//let url = "https://localhost/api"
 
 
 async function searchAnimes(title) {
@@ -52,8 +52,10 @@ async function render() {
                 let so = $(`<ul class="list-group"></ul>`)
                 episode.append(so);
                 ep[0].sources.forEach((src) => {
-                    so.append($(`<a class="list-group-item list-group-item-action" href="${src.player}">player</a>`))
-                    so.append($(`<a class="list-group-item list-group-item-action" href="${src.url}">file</a>`))
+                    let q = $(`<div>${src.quality}</div>`)
+                    so.append(q);
+                    q.append($(`<a class="list-group-item list-group-item-action" href="${src.player}">player</a>`))
+                    q.append($(`<a class="list-group-item list-group-item-action" href="${src.url}">file</a>`))
                 });
             });
         }
