@@ -1,2 +1,0 @@
-# amine
-Anime Streaming App
