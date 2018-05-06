@@ -1,5 +1,5 @@
-let url = "https://76.64.123.119/api"
-//let url = "https://localhost/api"
+//let url = "https://76.64.123.119/api"
+let url = "https://localhost/api"
 
 
 async function searchAnimes(title) {
