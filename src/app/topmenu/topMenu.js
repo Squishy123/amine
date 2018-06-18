@@ -14,15 +14,11 @@ export default class TopMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
             loginClick: true
         };
 
         //bind login and logout functions
         this.loginClick = this.loginClick.bind(this);
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
-
     }
 
     loginClick() {
@@ -32,30 +28,6 @@ export default class TopMenu extends React.Component {
             document.querySelector('#loginVisible').classList.add('is-active');
         }
         this.setState({loginClick: !this.state.loginClick});
-    }
-
-    login() {
-        auth.signInWithPopup(provider).then((result) => {
-            const user = result.user;
-            console.log(user);
-            this.setState({user})
-        })
-    }
-
-    logout() {
-        auth.signOut().then(() => {
-            this.setState({user: null})
-        })
-    }
-
-
-    componentDidMount() {
-        //check if user was signed in last time and login if yes
-        auth.onAuthStateChanged((user) => {
-            if(user) {
-                this.setState({user})
-            }
-        })
     }
 
     render() {
@@ -73,29 +45,29 @@ export default class TopMenu extends React.Component {
             </div>
             <div className="user-panel columns has-text-right">
                 <div className="column user-profile">
-                    {this.state.user ?
+                    {this.props.user ?
                     <div className="dropdown is-right" id="loginVisible">
                         <div class="dropdown-trigger">
                             <button className="profile-button" onClick={this.loginClick} aria-haspopup="true" aria-controls="dropdown-menu">
-                                <img className="user-photo-url"src={this.state.user.photoURL} />
+                                <img className="user-photo-url"src={this.props.user.photoURL} />
                             </button>
                         </div>
                         <div className="dropdown-menu" id="dropdown-menu" role="menu">
                             <div class="dropdown-content has-text-centered">
                                 <div class="dropdown-item">
-                                    <p className="subtitle is-3">{this.state.user.displayName}</p>
+                                    <p className="subtitle is-3">{this.props.user.displayName}</p>
                                 </div>
                                 <div class="dropdown-item">
                                     <a className="button is-info">My Account</a>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a className="button is-info" onClick={this.logout}>Sign out</a>
+                                    <a className="button is-info" onClick={this.props.logout}>Sign out</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     :
-                    <a className="button is-info is-medium" onClick={this.login}>Sign in</a>}
+                    <a className="button is-info is-medium" onClick={this.props.login}>Sign in</a>}
                 </div>
             </div>
         </div>
