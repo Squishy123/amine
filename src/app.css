@@ -1,0 +1,8 @@
+#outer-container {
+    height: 100%;
+    overflow: hidden;
+}
+
+#page-wrap {
+    padding: 75px 0 100px 0;
+}

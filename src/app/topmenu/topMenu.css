@@ -1,0 +1,13 @@
+:local(.main) {
+    top: 0;
+    position: fixed;
+    margin: 0;
+
+    width: 100%;
+    height: auto;
+    
+    padding: 10px 10px 10px 70px;
+    background-color: #373A47;
+    color: white;
+}
+
