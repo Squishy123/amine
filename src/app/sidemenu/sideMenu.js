@@ -1,5 +1,9 @@
 import React from 'react';
 
+//router
+import {Link} from "react-router-dom";
+
+//hamburger menu
 import { elastic as Menu } from 'react-burger-menu';
 
 //fontawesome
@@ -17,18 +21,18 @@ export default class SideMenu extends React.Component {
     render() {
         return(
             <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
-                 <a className="menu-item logo" href="/">
+                 <Link className="menu-item logo" to="/">
                     <span style={{fontSize: "30px"}}><span style={{fontWeight: "bold"}}>A</span>mine</span>
-                </a>
-                <a className="menu-item" href="/">
+                </Link>
+                <Link className="menu-item" to="/browse">
                     <FontAwesomeIcon icon={faSlidersH}/> Browse
-                </a>
-                <a className="menu-item" href="/">
+                </Link>
+                <Link className="menu-item" to="/">
                     <FontAwesomeIcon icon={faCalendarAlt}/> Schedule
-                </a>
-                <a className="menu-item" href="/">
+                </Link>
+                <Link className="menu-item" to="/">
                         <FontAwesomeIcon icon={faCog}/> Settings
-                </a>
+                </Link>
                 <div className="menu-item" id="bot">
                     <h3>
                         Version: Katsu

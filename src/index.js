@@ -8,7 +8,7 @@ import {BrowserRouter} from 'react-router-dom';
 import 'bulma/css/bulma.css';
 
 import styles from './index.css';
-import App from './app';
+import App from './app/app.js';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
