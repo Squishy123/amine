@@ -60,8 +60,8 @@ export default class TopMenu extends React.Component {
 
     render() {
         return (
-        <div className = {[styles.main, "columns is-centered"]. join(' ')}>
-            <div className="column is-9">
+        <div className = {[styles.main, "columns"]. join(' ')}>
+            <div className="column is-6">
                 <div className="field has-addons">
                     <div className="control is-expanded">
                         <input className="input is-medium" type="text" placeholder="Search"/>
@@ -71,7 +71,7 @@ export default class TopMenu extends React.Component {
                     </div>
                 </div>
             </div>
-            <div className="column is-3 columns has-text-right">
+            <div className="user-panel columns has-text-right">
                 <div className="column user-profile">
                     {this.state.user ?
                     <div className="dropdown is-right" id="loginVisible">
@@ -95,7 +95,7 @@ export default class TopMenu extends React.Component {
                         </div>
                     </div>
                     :
-                    <a className="button is-info" onClick={this.login}>Sign in</a>}
+                    <a className="button is-info is-medium" onClick={this.login}>Sign in</a>}
                 </div>
             </div>
         </div>
