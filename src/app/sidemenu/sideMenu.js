@@ -4,7 +4,7 @@ import { elastic as Menu } from 'react-burger-menu';
 
 //fontawesome
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faHome, faSearch, faUserCircle, faCalendarAlt, faSlidersH } from '@fortawesome/fontawesome-free-solid';
+import { faHome, faSearch, faCog, faCalendarAlt, faSlidersH } from '@fortawesome/fontawesome-free-solid';
 
 //style
 import styles from './sideMenu.css';
@@ -27,7 +27,7 @@ export default class SideMenu extends React.Component {
                     <FontAwesomeIcon icon={faCalendarAlt}/> Schedule
                 </a>
                 <a className="menu-item" href="/">
-                        <FontAwesomeIcon icon={faUserCircle}/> Account
+                        <FontAwesomeIcon icon={faCog}/> Settings
                 </a>
                 <div className="menu-item" id="bot">
                     <h3>
