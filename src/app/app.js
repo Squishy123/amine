@@ -7,7 +7,7 @@ import {Route} from 'react-router-dom';
 import SideMenu from './sidemenu/sideMenu.js';
 import TopMenu from './topmenu/topMenu.js';
 
-//pages
+//page components
 import Home from './home/home.js';
 import Browse from './browse/browse.js';
 
@@ -18,7 +18,7 @@ import styles from './app.css';
 import firebase, {auth, provider} from './firebase.js';
 
 export default class App extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             user: null
@@ -58,8 +58,8 @@ export default class App extends React.Component {
                 <SideMenu/>
                 <TopMenu login={this.login} logout={this.logout} user={this.state.user}/>
                 <main id="page-wrap">
-                    <Route exact path="/" component={Home}/>
-                    <Route exact path="/browse" component={Browse}/>
+                    <Route exact path="/" render={()=>(<Home/>)}/>
+                    <Route exact path="/browse" component={()=>(<Browse trendingAnime={this.props.trendingAnime}/>)}/>
                 </main>
             </div>
         </div>
