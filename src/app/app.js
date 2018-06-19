@@ -59,7 +59,7 @@ export default class App extends React.Component {
                 <TopMenu login={this.login} logout={this.logout} user={this.state.user}/>
                 <main id="page-wrap">
                     <Route exact path="/" render={()=>(<Home/>)}/>
-                    <Route exact path="/browse" component={()=>(<Browse trendingAnime={this.props.trendingAnime}/>)}/>
+                    <Route exact path="/browse" component={()=>(<Browse/>)}/>
                 </main>
             </div>
         </div>
