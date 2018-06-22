@@ -31,8 +31,8 @@ export default class Browse extends React.Component {
                                     <div className="card-image">
                                         <img src={e.attributes.posterImage.large} />
                                     </div>
-                                    <div className="card-content">
-                                        <a className="button is-primary" href={`/animes/${e.id}/${e.attributes.canonicalTitle}`} >
+                                    <div className="card-content has-text-centered">
+                                        <a className="button is-info" href={`/animes/${e.id}/${e.attributes.canonicalTitle}`} >
                                             Watch Now
                                     </a>
                                     </div>

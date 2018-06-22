@@ -1,0 +1,24 @@
+#footer {
+    background-color: #373A47;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+}
+
+#footer-content {
+    padding-top: 15px;
+}
+
+#footer-content > p {
+    color: white;
+}
+
+#footer-content > p > a {
+    color: #d7f442;
+}
+
+#footer-content > p >a:hover {
+    color: #209cee;
+}
