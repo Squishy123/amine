@@ -63,7 +63,7 @@ export default class App extends React.Component {
                             <main id="page-wrap">
                                 <Route exact path="/" render={()=>(<Home/>)}/>
                                 <Route exact path="/browse" component={()=>(<Browse/>)}/>
-                                <Route exact path="/search/:keyword" component={()=>(<Search database={database}/>)}/>
+                                <Route exact path="/search/:keyword" component={(props)=>(<Search {...props}/>)}/>
                                 <Route exact path="/animes/:id/:keyword" component={(props)=>(<Anime {...props}/>)}/>
                             </main>
                             <Footer/>

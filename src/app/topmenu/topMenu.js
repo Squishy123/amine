@@ -19,6 +19,12 @@ export default class TopMenu extends React.Component {
 
         //bind login and logout functions
         this.loginClick = this.loginClick.bind(this);
+        this.search = this.search.bind(this);
+    }
+
+    search(e) {
+        e.preventDefault();
+        window.location = `/search/${document.querySelector('#searchQuery').value}`;
     }
 
     loginClick() {
@@ -34,14 +40,16 @@ export default class TopMenu extends React.Component {
         return (
         <div className = {[styles.main, "columns"]. join(' ')}>
             <div className="column is-6">
-                <div className="field has-addons">
-                    <div className="control is-expanded">
-                        <input className="input is-medium" type="text" placeholder="Search"/>
-                    </div>  
-                    <div className="control">
-                        <a className="button is-info is-medium"><FontAwesomeIcon icon={faSearch}/></a>
+                <form autoComplete="off" onSubmit={this.search}>
+                    <div className="field has-addons">
+                        <div className="control is-expanded">
+                            <input className="input is-medium" type="text" placeholder="Search" id="searchQuery"/>
+                        </div>  
+                        <div className="control">
+                            <button type="submit" className="button is-info is-medium"><FontAwesomeIcon icon={faSearch}/></button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div className="user-panel columns has-text-right">
                 <div className="column user-profile">

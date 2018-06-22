@@ -53,7 +53,7 @@ export default class Browse extends React.Component {
         return (
             <div>
                 <div className="container">
-                    <h1 className="title is-2">Trending Anime</h1>
+                    <h1 className="title is-2 has-text-centered">Trending Anime</h1>
                     <div className="tile is-ancestor is-vertical">{this.state.trendingAnime}</div>
                 </div>
             </div>
