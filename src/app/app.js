@@ -64,7 +64,7 @@ export default class App extends React.Component {
                                 <Route exact path="/" render={()=>(<Home/>)}/>
                                 <Route exact path="/browse" component={()=>(<Browse/>)}/>
                                 <Route exact path="/search/:keyword" component={(props)=>(<Search {...props}/>)}/>
-                                <Route exact path="/animes/:id/:keyword" component={(props)=>(<Anime {...props}/>)}/>
+                                <Route exact path="/animes/:id/:keyword" component={(props)=>(<Anime user={this.state.user} database={database} {...props}/>)}/>
                             </main>
                             <Footer/>
                 </div>
