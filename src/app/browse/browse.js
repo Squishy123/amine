@@ -16,12 +16,12 @@ export default class Browse extends React.Component {
             .then(res => res.json())
             .then((metadata) => {
                 let trendingList = [];
-                for (let i = 0; i < metadata.data.length; i += 6) {
+                for (let i = 0; i < metadata.data.length; i += 4) {
                     let temp = [];
                     trendingList.push((<div className="tile is-parent" style={{ padding: 0 }}>{temp}</div>));
-                    metadata.data.slice(i, i + 6).forEach((e) => {
+                    metadata.data.slice(i, i + 4).forEach((e) => {
                         temp.push(
-                            <div className="tile is-child is-2" style={{ padding: "10px" }}>
+                            <div className="tile is-child is-3" style={{ padding: "10px" }}>
                                 <div className="card">
                                     <div className="card-header" style={{ height: "100px" }}>
                                         <div className="card-header-title">
