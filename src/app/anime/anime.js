@@ -8,6 +8,7 @@ export default class Anime extends React.Component {
             animeInfo: null,
             animePoster: null,
             episodes: [],
+            episodeSources: [],
             player: null
         }
 
@@ -28,7 +29,7 @@ export default class Anime extends React.Component {
                 this.setState({ animePoster: animePoster });
                 let animeInfo = (
                     <div className="columns is-centered">
-                        <div className="column is-3" style={{margin: "0 10px 0 10px"}}>
+                        <div className="column is-3" style={{ margin: "0 10px 0 10px" }}>
                             <div className="tile is-ancestor">
                                 <div className="tile is-child has-text-centered">
                                     <div className="box">
@@ -38,7 +39,7 @@ export default class Anime extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="column is-3" style={{margin: "0 10px 0 10px"}}>
+                        <div className="column is-3" style={{ margin: "0 10px 0 10px" }}>
                             <div className="tile is-ancestor is-vertical">
                                 <div className="tile is-child has-text-centered">
                                     <div className="box">
@@ -66,28 +67,52 @@ export default class Anime extends React.Component {
 
     buildEpisodes() {
         //search database for anime episodes
-        this.props.database.ref('scrape-results').once('value')
-            .then(snapshot => snapshot.val()[this.props.match.params.keyword])
+        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
+            .then(snapshot => snapshot.val())
             .then((val) => {
-                let episodes = [];
                 if (val) {
+                    let episodes = [];
+                    let episodeSources = [];
                     Object.keys(val.episodes).forEach((key) => {
+                        episodeSources.push(val.episodes[key].source);
                         episodes.push(<div className="column"><button onClick={() => { this.buildPlayer(val.episodes[key].source) }} className="button is-dark">{key}</button></div>);
                     });
-                    this.setState({ episodes: episodes });
+                    this.setState({ episodes: episodes, episodeSources: episodeSources });
                 } else {
+                    let episodes = this.state.episodes;
+                    let episodeSources = this.state.episodeSources;
+
                     this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
                     this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
-                        console.log(snapshot.val())
-                    })
+                        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
+                            .then(snapshot => snapshot.val())
+                            .then((val) => {
+                                let episodes = [];
+                                let episodeSources = [];
+                                Object.keys(val.episodes).forEach((key) => {
+                                    episodeSources.push(val.episodes[key].source);
+                                    episodes.push(<div className="column"><button onClick={() => { this.buildPlayer(val.episodes[key].source) }} className="button is-dark">{key}</button></div>);
+                                    this.setState({ episodes: episodes, episodeSources: episodeSources });
+                                });
+                                /*
+                                let grabbedEpisode, grabbedEpisodeSource;
+                                console.log(snapshot.val());
+                                grabbedEpisodeSource = snapshot.val().source;
+                                grabbedEpisode = (<div className="column"><button onClick={() => { this.buildPlayer(snapshot.val().source) }} className="button is-dark">{Object.keys(snapshot.val())[0]}</button></div>)
+                                episodes.push(grabbedEpisode);
+                                episodeSources.push(grabbedEpisodeSource);
+        
+                                this.setState({ episodes: episodes, episodeSources: episodeSources });*/
+                            });
+                    });
                 }
-            })
+            });
     }
 
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowfullscreen="true" />
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox allowfullscreen />
             </div>
         )
         this.setState({ player: player });
