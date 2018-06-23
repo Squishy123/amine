@@ -14,6 +14,7 @@ export default class Anime extends React.Component {
 
         this.buildAnimeMeta = this.buildAnimeMeta.bind(this);
         this.buildEpisodes = this.buildEpisodes.bind(this);
+        this.requestEpisodes = this.requestEpisodes.bind(this);
     }
 
     buildAnimeMeta() {
@@ -79,40 +80,39 @@ export default class Anime extends React.Component {
                     });
                     this.setState({ episodes: episodes, episodeSources: episodeSources });
                 } else {
-                    let episodes = this.state.episodes;
-                    let episodeSources = this.state.episodeSources;
-
-                    this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
-                    this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
-                        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
-                            .then(snapshot => snapshot.val())
-                            .then((val) => {
-                                let episodes = [];
-                                let episodeSources = [];
-                                Object.keys(val.episodes).forEach((key) => {
-                                    episodeSources.push(val.episodes[key].source);
-                                    episodes.push(<div className="column"><button onClick={() => { this.buildPlayer(val.episodes[key].source) }} className="button is-dark">{key}</button></div>);
-                                    this.setState({ episodes: episodes, episodeSources: episodeSources });
-                                });
-                                /*
-                                let grabbedEpisode, grabbedEpisodeSource;
-                                console.log(snapshot.val());
-                                grabbedEpisodeSource = snapshot.val().source;
-                                grabbedEpisode = (<div className="column"><button onClick={() => { this.buildPlayer(snapshot.val().source) }} className="button is-dark">{Object.keys(snapshot.val())[0]}</button></div>)
-                                episodes.push(grabbedEpisode);
-                                episodeSources.push(grabbedEpisodeSource);
-        
-                                this.setState({ episodes: episodes, episodeSources: episodeSources });*/
-                            });
-                    });
+                    this.setState({episodes: 
+                    <div className="column has-text-centered">
+                        <p className="title is-2">No animes stored in database</p>
+                        <button className="button is-large is-primary" onClick={() => {this.requestEpisodes()}}>Request Episodes</button>
+                    </div>})
                 }
             });
+    }
+
+    requestEpisodes() {
+        let episodes = this.state.episodes;
+        let episodeSources = this.state.episodeSources;
+
+        this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
+        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
+            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
+                .then(snapshot => snapshot.val())
+                .then((val) => {
+                    let episodes = [];
+                    let episodeSources = [];
+                    Object.keys(val.episodes).forEach((key) => {
+                        episodeSources.push(val.episodes[key].source);
+                        episodes.push(<div className="column"><button onClick={() => { this.buildPlayer(val.episodes[key].source) }} className="button is-dark">{key}</button></div>);
+                        this.setState({ episodes: episodes, episodeSources: episodeSources });
+                    });
+                });
+        });
     }
 
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox allowfullscreen />
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowfullscreen={true} />
             </div>
         )
         this.setState({ player: player });
