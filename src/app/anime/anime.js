@@ -90,6 +90,7 @@ export default class Anime extends React.Component {
     }
 
     requestEpisodes() {
+        this.setState({episodes: <div className="column has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div> })
         let episodes = this.state.episodes;
         let episodeSources = this.state.episodeSources;
 
@@ -112,7 +113,7 @@ export default class Anime extends React.Component {
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowfullscreen={true} />
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowfullscreen="true" />
             </div>
         )
         this.setState({ player: player });
