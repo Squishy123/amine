@@ -15,6 +15,8 @@ export default class Anime extends React.Component {
         this.buildAnimeMeta = this.buildAnimeMeta.bind(this);
         this.buildEpisodes = this.buildEpisodes.bind(this);
         this.requestEpisodes = this.requestEpisodes.bind(this);
+        this.buildPlayer = this.buildPlayer.bind(this);
+        this.buildTrailer = this.buildTrailer.bind(this);
     }
 
     buildAnimeMeta() {
@@ -30,7 +32,7 @@ export default class Anime extends React.Component {
                 this.setState({ animePoster: animePoster });
                 let animeInfo = (
                     <div className="columns is-centered">
-                        <div className="column is-3" style={{ margin: "0 10px 0 10px" }}>
+                        <div className="column is-6" style={{ margin: "0 10px 0 10px" }}>
                             <div className="tile is-ancestor">
                                 <div className="tile is-child has-text-centered">
                                     <div className="box">
@@ -45,6 +47,11 @@ export default class Anime extends React.Component {
                                 <div className="tile is-child has-text-centered">
                                     <div className="box">
                                         {animePoster}
+                                    </div>
+                                </div>
+                                <div className="tile is-child has-text-centered">
+                                    <div className="box">
+                                    <button className="button is-dark" onClick={() => {this.buildTrailer(`https://www.youtube.com/embed/${metadata.data.attributes.youtubeVideoId}`)}}>Watch Trailer</button>
                                     </div>
                                 </div>
                                 <div className="tile is-child has-text-centered">
@@ -110,10 +117,19 @@ export default class Anime extends React.Component {
         });
     }
 
+    buildTrailer(source) {
+        let player = (
+            <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} allowFullScreen={true}/>
+            </div>
+        )
+        this.setState({ player: player });
+    }
+
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowfullscreen="true" />
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowFullScreen={true}/>
             </div>
         )
         this.setState({ player: player });
@@ -127,7 +143,7 @@ export default class Anime extends React.Component {
     render() {
         return (
             <div>
-                <section className="hero is-info">
+                <section className="hero is-info is-bold">
                     <div className="hero-body">
                         <div className="columns is-centered">
                             <div className="column is-6 has-text-centered">

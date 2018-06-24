@@ -6,7 +6,8 @@ export default class Footer extends React.Component {
         return (<footer className="footer" id="footer">
             <div className="content has-text-centered" id="footer-content">
                 <p>
-                    <span style={{fontWeight: "bold"}}>Amine</span> 2018 created by <a href="https://github.com/Squishy123">Christian Wang</a> 
+                    <span style={{fontWeight: "bold"}}>Amine</span>@2018
+                    FYI this site does not store any files on its server. All content is provided by non-affiliated third parties
                 </p>
             </div>
         </footer>)

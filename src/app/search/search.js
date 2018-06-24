@@ -12,11 +12,11 @@ export default class Search extends React.Component {
 
     buildSearchResults() {
         return fetch(`https://kitsu.io/api/edge/anime?filter[text]=${this.props.match.params.keyword}&page[limit]=12&page[offset]=0`)
-        .then(res => res.json())
-        .then((metadata) => {
-            let results = [];
-            for(let i = 0; i < metadata.data.length; i+=4) {
-                let temp = [];
+            .then(res => res.json())
+            .then((metadata) => {
+                let results = [];
+                for (let i = 0; i < metadata.data.length; i += 4) {
+                    let temp = [];
                     results.push((<div className="tile is-parent" style={{ padding: 0 }}>{temp}</div>));
                     metadata.data.slice(i, i + 4).forEach((e) => {
                         temp.push(
@@ -38,9 +38,9 @@ export default class Search extends React.Component {
                                 </div>
                             </div>)
                     });
-            }
-            this.setState({searchResults: results});
-        })
+                }
+                this.setState({ searchResults: results });
+            })
     }
 
     componentDidMount() {
@@ -50,9 +50,13 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <h1 className="title is-2 has-text-centered">Search Results</h1>
-                <div className="tile is-ancestor is-vertical">{this.state.searchResults}</div>
+            <div className="hero is-light is-bold">
+                <div className="hero-body">
+                    <div className="container">
+                        <h1 className="title is-2 has-text-centered">Search Results</h1>
+                        <div className="tile is-ancestor is-vertical">{this.state.searchResults}</div>
+                    </div>
+                </div>
             </div>
         )
     }

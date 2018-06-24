@@ -40,7 +40,7 @@ export default class Browse extends React.Component {
                             </div>)
                     });
                 }
-                this.setState({trendingAnime: trendingList});
+                this.setState({ trendingAnime: trendingList });
             })
     }
 
@@ -52,9 +52,13 @@ export default class Browse extends React.Component {
     render() {
         return (
             <div>
-                <div className="container">
-                    <h1 className="title is-2 has-text-centered">Trending Anime</h1>
-                    <div className="tile is-ancestor is-vertical">{this.state.trendingAnime}</div>
+                <div className="hero is-light is-bold">
+                    <div className="hero-body">
+                        <div className="container">
+                            <h1 className="title is-2 has-text-centered">Trending Anime</h1>
+                            <div className="tile is-ancestor is-vertical">{this.state.trendingAnime}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
