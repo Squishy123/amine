@@ -159,7 +159,7 @@ export default class Anime extends React.Component {
                         </div>
                     </div>
                 </section>
-                <div className="columns is-centered" style={{ margin: "10px 0 0 0" }}>
+                <div className="columns is-centered" style={{ margin: "15px 0 40px 0" }}>
                     <div className="column">
                         {this.state.animeInfo}
                     </div>
