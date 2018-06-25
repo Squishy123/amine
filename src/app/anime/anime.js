@@ -114,11 +114,12 @@ export default class Anime extends React.Component {
                             }
 
                             //check if episodes are at max length
-                            if (episodes && this.state.metadata && episodes.length >= this.state.metadata.data.attributes.episodeCount) {
+                            if (episodes && this.state.metadata && episodes.length < this.state.metadata.data.attributes.episodeCount) {
+                                console.log(episodes.length, this.state.metadata.data.attributes.episodeCount)
                                 //add request button
                                 episodes.push(<div className="column is-12 has-text-centered">
                                     <p className="title is-2">Check for Updates</p>
-                                    <button className="button is-large is-primary" onClick={() => { this.requestEpisodes() }}>Request Update</button>
+                                    <button className="button is-large is-primary" onClick={() => { let eps = this.state.episodes; eps.pop(); this.setState({ episodes: eps }); this.requestEpisodes() }}>Request Update</button>
                                 </div>)
                                 //set state
                                 this.setState({
@@ -131,7 +132,9 @@ export default class Anime extends React.Component {
     }
 
     requestEpisodes() {
-        this.setState({ episodes: <div className="column has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div> })
+        let eps = this.state.episodes;
+        eps.push(<div className="column is-12 has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div>);
+        this.setState({ episodes: eps });
 
         this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
         //add listener 
@@ -140,11 +143,17 @@ export default class Anime extends React.Component {
                 .then(snapshot => snapshot.val())
                 .then((val) => {
                     let episodes = [];
+
                     let episodeSources = val.episodes;
 
                     Object.keys(val.episodes).forEach((key) => {
                         episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
                     });
+
+                    //push requesting button
+                    episodes.push(<div className="column is-12 has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div>);
+
+
                     this.setState({ episodes: episodes, episodeSources: episodeSources });
 
                     //check if episodeNumber
@@ -158,7 +167,8 @@ export default class Anime extends React.Component {
                     }
 
                     //check if episodes are at max length
-                    if (episodes && this.state.metadata && episodes.length >= this.state.metadata.data.attributes.episodeCount) {
+                    if (episodes && this.state.metadata && episodes.length < this.state.metadata.data.attributes.episodeCount) {
+                        /*
                         //add request button
                         episodes.push(
                             <div className="column is-12 has-text-centered">
@@ -167,8 +177,12 @@ export default class Anime extends React.Component {
                             </div>);
                         this.setState({
                             episodes: episodes
-                        });
-
+                        });*/
+                        //always gonna be an extra button
+                    } else if (episodes && this.state.metadata && episodes.length-1 >= this.state.metadata.data.attributes.episodeCount) {
+                        //remove request button
+                        episodes.pop();
+                        this.setState({episodes: episodes});
                         this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).off('child_added', listener);
                     }
                 });
@@ -187,7 +201,7 @@ export default class Anime extends React.Component {
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allow="autoplay" allowFullScreen={true} frameBorder="no" scrolling="no" />
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allow="autoplay; fullscreen" allowFullScreen={true} frameborder="no" scrolling="no" />
             </div>
         )
         this.setState({ player: player });
