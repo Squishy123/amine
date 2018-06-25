@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export default class Anime extends React.Component {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class Anime extends React.Component {
             .then(res => res.json())
             .then((metadata) => {
                 //save meta
-                this.setState({metadata: metadata});
+                this.setState({ metadata: metadata });
 
                 let animePoster = (
                     <div>
@@ -56,7 +56,7 @@ export default class Anime extends React.Component {
                                 </div>
                                 <div className="tile is-child has-text-centered">
                                     <div className="box">
-                                    <button className="button is-dark" onClick={() => {this.buildTrailer(`https://www.youtube.com/embed/${metadata.data.attributes.youtubeVideoId}`)}}>Watch Trailer</button>
+                                        <button className="button is-dark" onClick={() => { this.buildTrailer(`https://www.youtube.com/embed/${metadata.data.attributes.youtubeVideoId}`) }}>Watch Trailer</button>
                                     </div>
                                 </div>
                                 <div className="tile is-child has-text-centered">
@@ -84,57 +84,80 @@ export default class Anime extends React.Component {
             .then(snapshot => snapshot.val())
             .then((val) => {
                 if (!val) {
-                    this.setState({episodes: 
-                    <div className="column has-text-centered">
-                        <p className="title is-2">No animes stored in database</p>
-                        <button className="button is-large is-primary" onClick={() => {this.requestEpisodes()}}>Request Episodes</button>
-                    </div>})
-                }
-            });
+                    this.setState({
+                        episodes:
+                            <div className="column has-text-centered">
+                                <p className="title is-2">No animes stored in database</p>
+                                <button className="button is-large is-primary" onClick={() => { this.requestEpisodes() }}>Request Episodes</button>
+                            </div>
+                    })
+                } else {
+                    this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
+                        .then(snapshot => snapshot.val())
+                        .then((val) => {
+                            let episodes = [];
+                            let episodeSources = [];
 
-            //add listener 
-            let listener = this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
-                this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
-                    .then(snapshot => snapshot.val())
-                    .then((val) => {
-                        let episodes = [];
-                        let episodeSources = val.episodes;
+                            Object.keys(val.episodes).forEach((key) => {
+                                episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                                episodeSources.push(val.episodes[key])
+                            });
+                            this.setState({ episodes: episodes, episodeSources: episodeSources });
 
-                        Object.keys(val.episodes).forEach((key) => {
-                            episodes.push(<div className="column"><button onClick={() => {this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                            //check if episodeNumber
+                            if (this.props.match.params.episode) {
+                                if (episodeSources[this.props.match.params.episode]) {
+                                    this.buildPlayer(episodeSources[this.props.match.params.episode].source);
+                                }
+                            } else if (episodeSources["1"]) {
+                                this.redirectEpisodeLink("1");
+                                this.buildPlayer(episodeSources["1"].source);
+                            }
                         });
-                        this.setState({ episodes: episodes, episodeSources: episodeSources });
-    
-                         //check if episodeNumber
-                         if(this.props.match.params.episode) {
-                             if(episodeSources[this.props.match.params.episode]) {
-                                this.buildPlayer(episodeSources[this.props.match.params.episode].source);
-                             }
-                        } else if(episodeSources["1"]) {
-                            this.redirectEpisodeLink("1");
-                            this.buildPlayer(episodeSources["1"].source);
-                        }
-
-                        //check if episodes are at max length
-                        if(episodeSources && this.state.metadata && episodeSources.length >= this.state.metadata.data.attributes.episodeCount) {
-                            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).off('child_added', listener);
-                        }
-                    });
+                }
             });
     }
 
     requestEpisodes() {
-        this.setState({episodes: <div className="column has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div> })
-        let episodes = this.state.episodes;
-        let episodeSources = this.state.episodeSources;
+        this.setState({ episodes: <div className="column has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div> })
 
         this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
+        //add listener 
+        let listener = this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
+            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
+                .then(snapshot => snapshot.val())
+                .then((val) => {
+                    let episodes = [];
+                    let episodeSources = [];
+
+                    Object.keys(val.episodes).forEach((key) => {
+                        episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                        episodeSources.push(val.episodes[key])
+                    });
+                    this.setState({ episodes: episodes, episodeSources: episodeSources });
+
+                    //check if episodeNumber
+                    if (this.props.match.params.episode) {
+                        if (episodeSources[this.props.match.params.episode]) {
+                            this.buildPlayer(episodeSources[this.props.match.params.episode].source);
+                        }
+                    } else if (episodeSources["1"] && !this.props.match.params.episode) {
+                        this.redirectEpisodeLink("1");
+                        this.buildPlayer(episodeSources["1"].source);
+                    }
+
+                    //check if episodes are at max length
+                    if (episodeSources && this.state.metadata && episodeSources.length >= this.state.metadata.data.attributes.episodeCount) {
+                        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).off('child_added', listener);
+                    }
+                });
+        });
     }
 
     buildTrailer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} allowFullScreen={true}/>
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} allowFullScreen={true} />
             </div>
         )
         this.setState({ player: player });
@@ -143,7 +166,7 @@ export default class Anime extends React.Component {
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allow="autoplay"allowFullScreen={true} autoPlay={true}/>
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allow="autoplay" allowFullScreen={true} frameBorder="no" scrolling="no" />
             </div>
         )
         this.setState({ player: player });
@@ -153,7 +176,7 @@ export default class Anime extends React.Component {
         this.props.history.push(`/animes/${this.props.match.params.id}/${this.props.match.params.keyword}/episodes/${episodeName}`);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.buildAnimeMeta();
         this.buildEpisodes();
     }

@@ -57,20 +57,20 @@ export default class TopMenu extends React.Component {
                 <div className="column user-profile">
                     {this.props.user ?
                     <div className="dropdown is-right" id="loginVisible">
-                        <div class="dropdown-trigger">
+                        <div className="dropdown-trigger">
                             <button className="profile-button" onClick={this.loginClick} aria-haspopup="true" aria-controls="dropdown-menu">
                                 <img className="user-photo-url"src={this.props.user.photoURL} />
                             </button>
                         </div>
                         <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                            <div class="dropdown-content has-text-centered">
-                                <div class="dropdown-item">
+                            <div className="dropdown-content has-text-centered">
+                                <div className="dropdown-item">
                                     <p className="subtitle is-3">{this.props.user.displayName}</p>
                                 </div>
-                                <div class="dropdown-item">
+                                <div className="dropdown-item">
                                     <Link className="button is-info" to="/profile">My Account</Link>
                                 </div>
-                                <div class="dropdown-item">
+                                <div className="dropdown-item">
                                     <a className="button is-info" onClick={this.props.logout}>Sign out</a>
                                 </div>
                             </div>
