@@ -10,6 +10,7 @@ import Footer from './footer/footer.js';
 
 //page components
 import Home from './home/home.js';
+import Profile from './profile/profile.js';
 import Browse from './browse/browse.js';
 import Anime from './anime/anime.js';
 import Search from './search/search.js';
@@ -65,6 +66,7 @@ export default class App extends React.Component {
                             <TopMenu login={this.login} logout={this.logout} user={this.state.user}/>
                             <main id="page-wrap">
                                     <Route exact path="/" component={Tracker(Home)}/>
+                                    <Route exact path="/profile" component={Tracker(Profile, {user: this.state.user, database: database})}/>
                                     <Route exact path="/browse" component={Tracker(Browse)}/>
                                     <Route exact path="/search/:keyword" component={Tracker(Search)}/>
                                     <Route exact path="/animes/:id/:keyword" component={Tracker(withRouter(Anime), {user: this.state.user, database: database})}/>

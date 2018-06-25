@@ -11,6 +11,7 @@ export default class Anime extends React.Component {
             episodes: [],
             episodeSources: [],
             player: null,
+            metadata: null
         }
 
         this.buildAnimeMeta = this.buildAnimeMeta.bind(this);
@@ -24,6 +25,9 @@ export default class Anime extends React.Component {
         return fetch(`https://kitsu.io/api/edge/anime/${this.props.match.params.id}`)
             .then(res => res.json())
             .then((metadata) => {
+                //save meta
+                this.setState({metadata: metadata});
+
                 let animePoster = (
                     <div>
                         <p className="title is-3">{metadata.data.attributes.canonicalTitle}</p>
@@ -89,12 +93,13 @@ export default class Anime extends React.Component {
             });
 
             //add listener 
-            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
+            let listener = this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
                 this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
                     .then(snapshot => snapshot.val())
                     .then((val) => {
                         let episodes = [];
                         let episodeSources = val.episodes;
+
                         Object.keys(val.episodes).forEach((key) => {
                             episodes.push(<div className="column"><button onClick={() => {this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
                         });
@@ -108,6 +113,11 @@ export default class Anime extends React.Component {
                         } else if(episodeSources["1"]) {
                             this.redirectEpisodeLink("1");
                             this.buildPlayer(episodeSources["1"].source);
+                        }
+
+                        //check if episodes are at max length
+                        if(episodeSources && this.state.metadata && episodeSources.length >= this.state.metadata.data.attributes.episodeCount) {
+                            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).off('child_added', listener);
                         }
                     });
             });
@@ -133,7 +143,7 @@ export default class Anime extends React.Component {
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allowFullScreen={true}/>
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allow="autoplay"allowFullScreen={true} autoPlay={true}/>
             </div>
         )
         this.setState({ player: player });

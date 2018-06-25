@@ -1,5 +1,7 @@
 import React, {render} from 'react';
 
+import {Link} from 'react-router-dom';
+
 //fontawesome
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
@@ -66,7 +68,7 @@ export default class TopMenu extends React.Component {
                                     <p className="subtitle is-3">{this.props.user.displayName}</p>
                                 </div>
                                 <div class="dropdown-item">
-                                    <a className="button is-info">My Account</a>
+                                    <Link className="button is-info" to="/profile">My Account</Link>
                                 </div>
                                 <div class="dropdown-item">
                                     <a className="button is-info" onClick={this.props.logout}>Sign out</a>
