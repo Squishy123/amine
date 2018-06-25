@@ -20,6 +20,9 @@ import styles from './app.css';
 //firebase integration
 import firebase, {auth, database, provider} from './firebase.js';
 
+//google analytics integration
+import Tracker from './ga-tracker.js';
+
 export default class App extends React.Component {
     constructor(props) {
         super();
@@ -61,10 +64,10 @@ export default class App extends React.Component {
                             <SideMenu/>
                             <TopMenu login={this.login} logout={this.logout} user={this.state.user}/>
                             <main id="page-wrap">
-                                <Route exact path="/" render={()=>(<Home/>)}/>
-                                <Route exact path="/browse" component={()=>(<Browse/>)}/>
-                                <Route exact path="/search/:keyword" component={(props)=>(<Search {...props}/>)}/>
-                                <Route exact path="/animes/:id/:keyword" component={(props)=>(<Anime user={this.state.user} database={database} {...props}/>)}/>
+                                <Route exact path="/" component={Tracker(Home)}/>
+                                <Route exact path="/browse" component={Tracker(Browse)}/>
+                                <Route exact path="/search/:keyword" component={Tracker(Search)}/>
+                                <Route exact path="/animes/:id/:keyword" component={Tracker(Anime, {user: this.state.user, database: database})}/>
                             </main>
                             <Footer/>
                 </div>
