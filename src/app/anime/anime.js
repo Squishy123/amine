@@ -88,7 +88,7 @@ export default class Anime extends React.Component {
                         episodes:
                             <div className="column has-text-centered">
                                 <p className="title is-2">No animes stored in database</p>
-                                <button className="button is-large is-primary" onClick={() => { this.requestEpisodes() }}>Request Episodes</button>
+                                <button className="button is-large is-primary" onClick={() => { this.setState({ episodes: <div className="column is-12 has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div> }); this.requestEpisodes() }}>Request Episodes</button>
                             </div>
                     })
                 } else {
@@ -132,10 +132,7 @@ export default class Anime extends React.Component {
     }
 
     requestEpisodes() {
-        let eps = this.state.episodes;
-        eps.push(<div className="column is-12 has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div>);
-        this.setState({ episodes: eps });
-
+        this.setState({episodes: <div className="column is-12 has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div>})
         this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
         //add listener 
         let listener = this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
@@ -167,19 +164,7 @@ export default class Anime extends React.Component {
                     }
 
                     //check if episodes are at max length
-                    if (episodes && this.state.metadata && episodes.length < this.state.metadata.data.attributes.episodeCount) {
-                        /*
-                        //add request button
-                        episodes.push(
-                            <div className="column is-12 has-text-centered">
-                                <p className="title is-2">Check for Updates</p>
-                                <button className="button is-large is-primary" onClick={() => { this.requestEpisodes() }}>Request Update</button>
-                            </div>);
-                        this.setState({
-                            episodes: episodes
-                        });*/
-                        //always gonna be an extra button
-                    } else if (episodes && this.state.metadata && episodes.length-1 >= this.state.metadata.data.attributes.episodeCount) {
+                    if (episodes && this.state.metadata && episodes.length-1 >= this.state.metadata.data.attributes.episodeCount) {
                         //remove request button
                         episodes.pop();
                         this.setState({episodes: episodes});
