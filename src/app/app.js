@@ -1,7 +1,7 @@
 import React from 'react';
 
 //router
-import {Route} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 
 //components
 import SideMenu from './sidemenu/sideMenu.js';
@@ -64,10 +64,11 @@ export default class App extends React.Component {
                             <SideMenu/>
                             <TopMenu login={this.login} logout={this.logout} user={this.state.user}/>
                             <main id="page-wrap">
-                                <Route exact path="/" component={Tracker(Home)}/>
-                                <Route exact path="/browse" component={Tracker(Browse)}/>
-                                <Route exact path="/search/:keyword" component={Tracker(Search)}/>
-                                <Route exact path="/animes/:id/:keyword" component={Tracker(Anime, {user: this.state.user, database: database})}/>
+                                    <Route exact path="/" component={Tracker(Home)}/>
+                                    <Route exact path="/browse" component={Tracker(Browse)}/>
+                                    <Route exact path="/search/:keyword" component={Tracker(Search)}/>
+                                    <Route exact path="/animes/:id/:keyword" component={Tracker(withRouter(Anime), {user: this.state.user, database: database})}/>
+                                    <Route exact path="/animes/:id/:keyword/episodes/:episode" component={Tracker(withRouter(Anime), {user: this.state.user, database: database})}/>
                             </main>
                             <Footer/>
                 </div>

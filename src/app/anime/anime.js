@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 
 export default class Anime extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class Anime extends React.Component {
             animePoster: null,
             episodes: [],
             episodeSources: [],
-            player: null
+            player: null,
         }
 
         this.buildAnimeMeta = this.buildAnimeMeta.bind(this);
@@ -78,21 +79,37 @@ export default class Anime extends React.Component {
         this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
             .then(snapshot => snapshot.val())
             .then((val) => {
-                if (val) {
-                    let episodes = [];
-                    let episodeSources = [];
-                    Object.keys(val.episodes).forEach((key) => {
-                        episodeSources.push(val.episodes[key].source);
-                        episodes.push(<div className="column"><button onClick={() => { this.buildPlayer(val.episodes[key].source) }} className="button is-dark">{key}</button></div>);
-                    });
-                    this.setState({ episodes: episodes, episodeSources: episodeSources });
-                } else {
+                if (!val) {
                     this.setState({episodes: 
                     <div className="column has-text-centered">
                         <p className="title is-2">No animes stored in database</p>
                         <button className="button is-large is-primary" onClick={() => {this.requestEpisodes()}}>Request Episodes</button>
                     </div>})
                 }
+            });
+
+            //add listener 
+            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
+                this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
+                    .then(snapshot => snapshot.val())
+                    .then((val) => {
+                        let episodes = [];
+                        let episodeSources = val.episodes;
+                        Object.keys(val.episodes).forEach((key) => {
+                            episodes.push(<div className="column"><button onClick={() => {this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                        });
+                        this.setState({ episodes: episodes, episodeSources: episodeSources });
+    
+                         //check if episodeNumber
+                         if(this.props.match.params.episode) {
+                             if(episodeSources[this.props.match.params.episode]) {
+                                this.buildPlayer(episodeSources[this.props.match.params.episode].source);
+                             }
+                        } else if(episodeSources["1"]) {
+                            this.redirectEpisodeLink("1");
+                            this.buildPlayer(episodeSources["1"].source);
+                        }
+                    });
             });
     }
 
@@ -102,19 +119,6 @@ export default class Anime extends React.Component {
         let episodeSources = this.state.episodeSources;
 
         this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
-        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
-            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
-                .then(snapshot => snapshot.val())
-                .then((val) => {
-                    let episodes = [];
-                    let episodeSources = [];
-                    Object.keys(val.episodes).forEach((key) => {
-                        episodeSources.push(val.episodes[key].source);
-                        episodes.push(<div className="column"><button onClick={() => { this.buildPlayer(val.episodes[key].source) }} className="button is-dark">{key}</button></div>);
-                        this.setState({ episodes: episodes, episodeSources: episodeSources });
-                    });
-                });
-        });
     }
 
     buildTrailer(source) {
@@ -135,7 +139,11 @@ export default class Anime extends React.Component {
         this.setState({ player: player });
     }
 
-    componentDidMount() {
+    redirectEpisodeLink(episodeName) {
+        this.props.history.push(`/animes/${this.props.match.params.id}/${this.props.match.params.keyword}/episodes/${episodeName}`);
+    }
+
+    componentWillMount() {
         this.buildAnimeMeta();
         this.buildEpisodes();
     }
