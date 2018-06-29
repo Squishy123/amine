@@ -8,7 +8,7 @@ export default class Anime extends React.Component {
         this.state = {
             animeInfo: null,
             animePoster: null,
-            episodes: [],
+            episodes: <div className="column is-12 has-text-centered"><h1 className="title is-2">Querying Server...</h1><button className="button is-large is-primary is-loading">Request</button></div>,
             episodeSources: [],
             player: null,
             metadata: null
@@ -114,8 +114,7 @@ export default class Anime extends React.Component {
                             }
 
                             //check if episodes are at max length
-                            if (episodes && this.state.metadata && episodes.length < this.state.metadata.data.attributes.episodeCount) {
-                                console.log(episodes.length, this.state.metadata.data.attributes.episodeCount)
+                            if (episodes && this.state.metadata && episodes.length <= this.state.metadata.data.attributes.episodeCount) {
                                 //add request button
                                 episodes.push(<div className="column is-12 has-text-centered">
                                     <p className="title is-2">Check for Updates</p>
@@ -186,7 +185,7 @@ export default class Anime extends React.Component {
     buildPlayer(source) {
         let player = (
             <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="" allow="autoplay; fullscreen" allowFullScreen={true} frameborder="no" scrolling="no" />
+                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="allow-scripts" allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
             </div>
         )
         this.setState({ player: player });
