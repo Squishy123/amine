@@ -157,8 +157,9 @@ export default class Anime extends React.Component {
                     this.setState({ episodes: episodes, episodeSources: episodeSources });
 
                     //check if episodeNumber
-                    if (this.props.match.params.episode) {
+                    if (this.props.match.params.episode && !this.state.player) {
                         if (episodeSources[this.props.match.params.episode]) {
+                            console.log("drawing!");
                             this.buildPlayer(episodeSources[this.props.match.params.episode].source);
                         }
                     } else if (episodeSources["1"] && !this.props.match.params.episode) {
