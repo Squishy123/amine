@@ -18,6 +18,7 @@ export default class Anime extends React.Component {
         this.buildEpisodes = this.buildEpisodes.bind(this);
         this.requestEpisodes = this.requestEpisodes.bind(this);
         this.buildPlayer = this.buildPlayer.bind(this);
+        this.buildBetaPlayer = this.buildBetaPlayer.bind(this);
         this.buildTrailer = this.buildTrailer.bind(this);
     }
 
@@ -103,18 +104,18 @@ export default class Anime extends React.Component {
                                 if (Number(key)) {
                                     length++;
                                 }
-                                episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                                episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source, key) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
                             });
                             this.setState({ episodes: episodes, episodeSources: episodeSources });
 
                             //check if episodeNumber
                             if (this.props.match.params.episode) {
                                 if (episodeSources[this.props.match.params.episode]) {
-                                    this.buildPlayer(episodeSources[this.props.match.params.episode].source);
+                                    this.buildPlayer(episodeSources[this.props.match.params.episode].source, this.props.match.params.episode);
                                 }
                             } else if (episodeSources["1"] && !this.props.match.params.episode) {
                                 this.redirectEpisodeLink("1");
-                                this.buildPlayer(episodeSources["1"].source);
+                                this.buildPlayer(episodeSources["1"].source, 1);
                             }
 
                             //check if episodes are at max length
@@ -147,7 +148,7 @@ export default class Anime extends React.Component {
                     let episodeSources = val.episodes;
 
                     Object.keys(val.episodes).forEach((key) => {
-                        episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                        episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source, key) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
                     });
 
                     //push requesting button
@@ -160,11 +161,11 @@ export default class Anime extends React.Component {
                     if (this.props.match.params.episode && !this.state.player) {
                         if (episodeSources[this.props.match.params.episode]) {
                             console.log("drawing!");
-                            this.buildPlayer(episodeSources[this.props.match.params.episode].source);
+                            this.buildPlayer(episodeSources[this.props.match.params.episode].source, this.props.match.params.episode);
                         }
                     } else if (episodeSources["1"] && !this.props.match.params.episode) {
                         this.redirectEpisodeLink("1");
-                        this.buildPlayer(episodeSources["1"].source);
+                        this.buildPlayer(episodeSources["1"].source, 1);
                     }
 
                     //check if episodes are at max length
@@ -187,13 +188,66 @@ export default class Anime extends React.Component {
         this.setState({ player: player });
     }
 
-    buildPlayer(source) {
+    buildPlayer(source, id) {
         let player = (
-            <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="allow-scripts" allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
+            <div>
+                <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
+                    <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="allow-scripts" allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
+                </div>
+                <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.buildBetaPlayer(source, id) }}>Beta Player</button>
             </div>
         )
         this.setState({ player: player });
+    }
+
+    buildBetaPlayer(source, id) {
+        this.setState({ player: null })
+        let xhr = new XMLHttpRequest();
+        let obj = this;
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                let html = this.responseText;
+                let vdom = document.createRange().createContextualFragment(html);
+                let qualityList = [];
+                vdom.querySelectorAll('#home_video > div:nth-child(8) > a').forEach((e) => {
+                    let q = (
+                        <div className="column">
+                            <button className="button is-link" onClick={() => { obj.buildBetaPlayer(e.href, id) }}>{e.querySelector('div').innerHTML}</button>
+                        </div>
+                    );
+                    qualityList.push(q);
+                })
+                let src = vdom.querySelector('source').src;
+                let name = `${obj.props.match.params.keyword} Episode: ${id}`;
+                console.log(name);
+                let player = (
+                    <div>
+                        <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
+                            <video style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} controls autoPlay>
+                                <source src={src} type="video/mp4" />
+                                You're browser does not support this player...
+                        </video>
+                        </div>
+                        <div className="columns" style={{ marginTop: "15px" }}>
+                            {qualityList}
+                        </div>
+                        <a className="button is-link" download={name} href={src} >Download Episode</a>
+                    </div>
+                )
+                obj.setState({ player: player });
+            }
+        }
+        let url = `${window.location.href.includes('localhost') ? `http://192.168.2.64:2000` : `http://70.48.23.75:2000`}` + `/${source}`;
+        xhr.open("POST", url); // assuming you’re hosting it locally
+        xhr.setRequestHeader("Content-type", 'application/html');
+        let data = {
+            headers: {
+                Accept: "application/html",
+                Origin: "https://www.rapidvideo.com"
+            },
+            method: 'GET'
+        };
+        xhr.send(JSON.stringify(data))
     }
 
     redirectEpisodeLink(episodeName) {
