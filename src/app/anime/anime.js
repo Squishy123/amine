@@ -11,6 +11,7 @@ export default class Anime extends React.Component {
             episodes: <div className="column is-12 has-text-centered"><h1 className="title is-2">Querying Server...</h1><button className="button is-large is-primary is-loading">Request</button></div>,
             episodeSources: [],
             player: null,
+            native: false,
             metadata: null
         }
 
@@ -189,15 +190,28 @@ export default class Anime extends React.Component {
     }
 
     buildPlayer(source, id) {
-        let player = (
-            <div>
-                <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                    <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox="allow-scripts" allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
+        this.setState({ player: null }, () => {
+            let player = (
+                <div>
+                    <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
+                        <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox={(this.state.native) ? "" : "allow-scripts"} allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
+                    </div>
+                    <div className="columns">
+                        <div className="column">
+                            <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.setState({ native: false }); this.buildPlayer(source, id); }}>Regular Player</button>
+                        </div>
+                        <div className="column">
+                            <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.setState({ native: true }); this.buildPlayer(source, id); }}>Native Player</button>
+                        </div>
+                        <div className="column">
+                            <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.buildBetaPlayer(source, id) }}>Beta Player</button>
+                        </div>
+                    </div>
                 </div>
-                <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.buildBetaPlayer(source, id) }}>Beta Player</button>
-            </div>
-        )
-        this.setState({ player: player });
+            )
+            this.setState({ player: player });
+        })
+
     }
 
     buildBetaPlayer(source, id) {
@@ -237,7 +251,7 @@ export default class Anime extends React.Component {
                 obj.setState({ player: player });
             }
         }
-        let url = `${window.location.href.includes('localhost') ? `http://192.168.2.64:2000` : `http://70.48.23.75:2000`}` + `/${source}`;
+        let url = `${window.location.href.includes('localhost') ? `https://192.168.2.64` : `https://70.48.23.75`}` + `/${source}`;
         xhr.open("POST", url); // assuming you’re hosting it locally
         xhr.setRequestHeader("Content-type", 'application/html');
         let data = {
