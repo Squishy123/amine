@@ -194,7 +194,7 @@ export default class Anime extends React.Component {
             let player = (
                 <div>
                     <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                        <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox={(this.state.native) ? "" : "allow-scripts"} allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
+                        <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox={(this.state.native) ? " " : "allow-scripts"} allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
                     </div>
                     <div className="columns">
                         <div className="column">
@@ -251,7 +251,7 @@ export default class Anime extends React.Component {
                 obj.setState({ player: player });
             }
         }
-        let url = `${window.location.href.includes('localhost') ? `https://192.168.2.64` : `https://70.48.23.75`}` + `/${source}`;
+        let url = `${window.location.href.includes('localhost') ? `https://192.168.2.64:2000` : `https://70.48.23.75:2000`}` + `/${source}`;
         xhr.open("POST", url); // assuming you’re hosting it locally
         xhr.setRequestHeader("Content-type", 'application/html');
         let data = {
