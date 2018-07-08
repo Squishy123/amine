@@ -12,8 +12,7 @@ export default class Anime extends React.Component {
             episodeSources: [],
             player: null,
             native: false,
-            metadata: null,
-            encodedURI: encodeURIComponent(this.props.match.params.keyword)
+            metadata: null
         }
 
         this.buildAnimeMeta = this.buildAnimeMeta.bind(this);
@@ -83,7 +82,7 @@ export default class Anime extends React.Component {
 
     buildEpisodes() {
         //search database for anime episodes
-        this.props.database.ref(`scrape-results/${this.state.encodedURI}`).once('value')
+        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
             .then(snapshot => snapshot.val())
             .then((val) => {
                 if (!val) {
@@ -95,7 +94,7 @@ export default class Anime extends React.Component {
                             </div>
                     })
                 } else {
-                    this.props.database.ref(`scrape-results/${this.state.encodedURI}`).once('value')
+                    this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
                         .then(snapshot => snapshot.val())
                         .then((val) => {
                             let episodes = [];
@@ -139,10 +138,10 @@ export default class Anime extends React.Component {
 
     requestEpisodes() {
         this.setState({ episodes: <div className="column is-12 has-text-centered"><h1 className="title is-2">Scraping...</h1><button className="button is-large is-primary is-loading">Request</button></div> })
-        this.props.database.ref('scrape-requests').push(this.state.encodedURI);
+        this.props.database.ref('scrape-requests').push(this.props.match.params.keyword);
         //add listener 
-        let listener = this.props.database.ref(`scrape-results/${this.state.encodedURI}/episodes`).on('child_added', (snapshot) => {
-            this.props.database.ref(`scrape-results/${this.state.encodedURI}`).once('value')
+        let listener = this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).on('child_added', (snapshot) => {
+            this.props.database.ref(`scrape-results/${this.props.match.params.keyword}`).once('value')
                 .then(snapshot => snapshot.val())
                 .then((val) => {
                     let episodes = [];
@@ -175,7 +174,7 @@ export default class Anime extends React.Component {
                         //remove request button
                         episodes.pop();
                         this.setState({ episodes: episodes });
-                        this.props.database.ref(`scrape-results/${this.state.encodedURI}/episodes`).off('child_added', listener);
+                        this.props.database.ref(`scrape-results/${this.props.match.params.keyword}/episodes`).off('child_added', listener);
                     }
                 });
         });
@@ -266,7 +265,7 @@ export default class Anime extends React.Component {
     }
 
     redirectEpisodeLink(episodeName) {
-        this.props.history.push(`/animes/${this.props.match.params.id}/${this.state.encodedURI}/episodes/${episodeName}`);
+        this.props.history.push(`/animes/${this.props.match.params.id}/${this.props.match.params.keyword}/episodes/${episodeName}`);
     }
 
     componentDidMount() {
