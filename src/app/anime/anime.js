@@ -105,14 +105,16 @@ export default class Anime extends React.Component {
                                 if (Number(key)) {
                                     length++;
                                 }
-                                episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source, key) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                                let src = episodeSources[key][0].src;
+                                //console.log(src);
+                                episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(src, key) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
                             });
                             this.setState({ episodes: episodes, episodeSources: episodeSources });
 
                             //check if episodeNumber
                             if (this.props.match.params.episode) {
                                 if (episodeSources[this.props.match.params.episode]) {
-                                    this.buildPlayer(episodeSources[this.props.match.params.episode].source, this.props.match.params.episode);
+                                    this.buildPlayer(null, this.props.match.params.episode);
                                 }
                             } else if (episodeSources["1"] && !this.props.match.params.episode) {
                                 this.redirectEpisodeLink("1");
@@ -127,9 +129,7 @@ export default class Anime extends React.Component {
                                     <button className="button is-large is-primary" onClick={() => { let eps = this.state.episodes; eps.pop(); this.setState({ episodes: eps }); this.requestEpisodes() }}>Request Update</button>
                                 </div>)
                                 //set state
-                                this.setState({
-                                    episodes: episodes
-                                })
+                                this.setState({ episodes: episodes, episodeSources: episodeSources });
                             }
                         });
                 }
@@ -149,7 +149,7 @@ export default class Anime extends React.Component {
                     let episodeSources = val.episodes;
 
                     Object.keys(val.episodes).forEach((key) => {
-                        episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key].source, key) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
+                        episodes.push(<div className="column"><button onClick={() => { this.redirectEpisodeLink(key); this.buildPlayer(val.episodes[key][0].src, key) }} className={`button ${(key == this.props.match.params.episode) ? "is-danger" : "is-dark"}`}>{key}</button></div>);
                     });
 
                     //push requesting button
@@ -194,21 +194,22 @@ export default class Anime extends React.Component {
             let player = (
                 <div>
                     <div style={{ position: "relative", padding: "56.25% 0 30px 0", height: 0, overflow: "hidden" }}>
-                        <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={source} sandbox={(this.state.native) ? " " : "allow-scripts"} allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
+                        <iframe style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} src={this.state.episodeSources[id][0].src} sandbox={`${(this.state.native) ? " " : "allow-scripts"} allow-same-origin`} allow="autoplay; fullscreen" allowFullScreen={true} frameBorder="no" scrolling="no" />
                     </div>
-                    <div className="columns">
+                </div>
+            )
+            /*     various player buttons rollback
+                  <div className="columns">
                         <div className="column">
-                            <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.setState({ native: false }); this.buildPlayer(source, id); }}>Regular Player</button>
+                            <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.setState({ native: false }); this.buildPlayer(null, id); }}>Regular Player</button>
                         </div>
+                    </div>              
                         <div className="column">
                             <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.setState({ native: true }); this.buildPlayer(source, id); }}>Native Player</button>
                         </div>
                         <div className="column">
                             <button className="button is-danger" style={{ marginTop: "15px" }} onClick={() => { this.buildBetaPlayer(source, id) }}>Beta Player</button>
-                        </div>
-                    </div>
-                </div>
-            )
+                        </div>*/
             this.setState({ player: player });
         })
 
